@@ -310,7 +310,7 @@ es:{
  updating:'Actualizando resultados…', srcOf:'Fuente: ', tryFIFA:'Probando FIFA…', tryTSDB:'Probando TheSportsDB…', failTSDB:'TheSportsDB falló: ', notAvail:' no disponible ',
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
- mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', createdBy:'Creado por', locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
+ mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', createdBy:'Creado por', droppedLate:n=>`${n} predicción(es) de partidos que ya habían empezado no se pueden registrar (no son verificables) y contarán como 0–0.`, locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
  cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. Tu correo no aparece en el ranking público; solo el organizador del juego puede verlo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Nombre y apellido (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  cloudPubLabel:'Aparecer en el ranking público', rankPrivate:'Estás en modo privado: tu puntaje no aparece en el ranking público.', rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
@@ -345,7 +345,7 @@ en:{
  updating:'Updating results…', srcOf:'Source: ', tryFIFA:'Trying FIFA…', tryTSDB:'Trying TheSportsDB…', failTSDB:'TheSportsDB failed: ', notAvail:' unavailable ',
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
- mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', createdBy:'Created by', locked:'Prediction locked: the match already started. Empty counts as 0–0.',
+ mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', createdBy:'Created by', droppedLate:n=>`${n} prediction(s) for matches that had already kicked off can't be registered (not verifiable) and will count as 0–0.`, locked:'Prediction locked: the match already started. Empty counts as 0–0.',
  cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is not shown in the public ranking; only the game organizer can see it.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'First & last name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  cloudPubLabel:'Show me in the public ranking', rankPrivate:"You're in private mode: your score doesn't appear in the public ranking.", rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
@@ -1061,6 +1061,8 @@ async function cloudSubmit(){
   }else{ // paso nombre
     const name=$('clName').value.trim();
     if(!name){showClErr(t('cloudNeedName'));return;}
+    const dropped=dropLatePredictions();
+    if(dropped)alert(t('droppedLate',dropped));
     state.cloudId=clPendingId;state.cloudName=name.slice(0,30);
     state.cloudEmail=($('clEmail').value.trim()||'').toLowerCase();
     state.cloudPublic=$('clPub').checked;
@@ -1075,6 +1077,18 @@ function applyRemoteState(s){
 function cloudPubChanged(){
   if(!state.cloudId)return; // en registro se lee al enviar
   state.cloudPublic=$('clPub').checked;save();cloudPush();RANK=null;renderStats();
+}
+// Espejo de la regla del servidor: al registrarse como nuevo, las predicciones
+// de partidos ya iniciados no son verificables y se descartan (cuentan 0-0).
+function dropLatePredictions(){
+  let n=0;
+  for(const m of GM)if(gmStarted(m)&&isScore(state.pred[m.id])){delete state.pred[m.id];n++;}
+  for(const mid of ALL_KO_IDS){
+    if(!koStarted(mid))continue;
+    if(state.predKO[mid]){delete state.predKO[mid];n++;}
+    if(state.predKOsc[mid])delete state.predKOsc[mid];
+  }
+  return n;
 }
 function cloudSwitch(){delete state.cloudId;delete state.cloudName;delete state.cloudEmail;delete state.cloudPublic;save();updateCloudBtn();renderStats();cloudOpen(true);}
 async function loadRanking(){
