@@ -18,10 +18,10 @@ Un solo archivo HTML. Sin instalación, sin cuenta, sin servidor. Tus datos nunc
 - **Los 104 partidos reales** — sorteo, calendario y sedes oficiales (grupos A–L, 11 jun – 19 jul 2026).
 - **Predicciones de fase de grupos** — escribe tu marcador para los 72 partidos; las tablas de posiciones se calculan en vivo con los criterios oficiales FIFA (puntos → diferencia de gol → goles a favor).
 - **Bracket completo de eliminatorias** — tu bracket se arma automáticamente con tus predicciones de grupos: primeros, segundos y los 8 mejores terceros, usando la **tabla oficial del Anexo C de FIFA (las 495 combinaciones de terceros)**. Predice marcadores (o solo haz clic en el ganador) hasta la final. Si predices empate, elige con un clic al ganador de los penales.
-- **⟳ Actualizar resultados reales** — un botón trae los marcadores reales (fuentes, en orden: fixturedownload.com → API de FIFA → TheSportsDB). También puedes escribirlos a mano.
+- **Resultados reales automáticos** — la app actualiza los marcadores sola (al abrirla y cada 3 horas; fuentes, en orden: fixturedownload.com → API de FIFA → TheSportsDB). También puedes escribirlos a mano.
 - **Aciertos y puntos** — marcadores exactos, resultados (1X2), equipos acertados por ronda eliminatoria y puntaje total.
 - **Partidos de hoy** — tarjetas grandes con la hora **en tu zona horaria**, sede, tu predicción y el resultado en vivo.
-- **Guardado en la nube y ranking global (☁️)** — opcional: escribe tu correo (sin contraseña, sin registro) y tus predicciones se sincronizan entre dispositivos. Un ranking en vivo compara tus puntos con todos los que juegan.
+- **Guardado en la nube y ranking global (☁️)** — entras solo con tu correo (sin contraseña): tus predicciones se sincronizan entre dispositivos y compites en un ranking en vivo. El nombre se pide solo la primera vez.
 - **Bilingüe** — cambia entre español e inglés cuando quieras (botón 🌐).
 - **Modo claro y oscuro** — sigue tu sistema, o cámbialo con el botón ☀️/🌙.
 - **Respaldo** — exporta / importa todas tus predicciones como archivo JSON.
@@ -46,7 +46,7 @@ open index.html   # macOS — o simplemente doble clic
 
 1. **Pestaña Fase de grupos** — escribe tu marcador (campos azules) en los 72 partidos. Las tablas se actualizan mientras escribes.
 2. **Pestaña Eliminatorias → "Mi bracket"** — con tus 72 predicciones completas aparece tu bracket. Escribe marcadores o haz clic en equipos para avanzarlos, ronda por ronda, hasta coronar a tu campeón.
-3. Durante el torneo, presiona **⟳ Actualizar resultados reales**. Los marcadores reales llenan los campos verdes, el bracket real se arma solo y **Mis aciertos** muestra cómo vas.
+3. Durante el torneo, los marcadores reales se cargan **solos** en los campos verdes, el bracket real se arma automáticamente y **Mis aciertos** muestra cómo vas. Cada predicción se cierra cuando su partido empieza (vacía cuenta como 0–0).
 
 ## 🏆 Puntaje
 

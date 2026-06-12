@@ -18,10 +18,10 @@ A single HTML file. No installation, no account, no server. Your data never leav
 - **All 104 real matches** — the official draw, schedule and venues (groups A–L, Jun 11 – Jul 19, 2026).
 - **Group stage predictions** — enter your score for the 72 group matches; standings are computed live using the official FIFA criteria (points → goal difference → goals scored).
 - **Full knockout bracket** — your bracket is built automatically from your group predictions: winners, runners-up and the 8 best third-placed teams, using the **official FIFA Annex C table (all 495 third-place combinations)**. Predict scores (or just click a winner) all the way to the final. If you predict a draw, click the penalty-shootout winner.
-- **⟳ Update real results** — one button fetches real scores (sources, in order: fixturedownload.com → FIFA API → TheSportsDB). You can also type real scores manually.
+- **Auto-updating real results** — the app refreshes scores automatically (on open and every 3 hours; sources, in order: fixturedownload.com → FIFA API → TheSportsDB). You can also type a score manually.
 - **Accuracy & points** — exact scores, correct outcomes (1X2), correct teams per knockout round, and a total score.
 - **Today's matches** — big cards with kickoff time **in your local timezone**, venue, your prediction and the live result.
-- **Cloud save & global ranking (☁️)** — optional: enter your email (no password, no signup) and your predictions sync across devices. A live ranking compares your points with everyone playing.
+- **Cloud save & global ranking (☁️)** — sign in with just your email (no password): your predictions sync across devices and you compete in a live ranking. Name asked only the first time.
 - **Bilingual** — switch Spanish / English anytime (🌐 button).
 - **Light & dark mode** — follows your system, or toggle it (☀️/🌙 button).
 - **Backup** — export / import all your predictions as a JSON file.
@@ -46,7 +46,7 @@ open index.html   # macOS — or just double-click it
 
 1. **Group stage tab** — type your predicted score (blue inputs) for the 72 matches. Group tables update as you type.
 2. **Knockout tab → "My bracket"** — once your 72 predictions are in, your bracket appears. Type scores or click teams to advance them, round by round, until you crown your champion.
-3. During the tournament, press **⟳ Update real results**. Real scores fill the green inputs, the real bracket builds itself, and **My accuracy** shows how well you did.
+3. During the tournament, real scores load **automatically** into the green inputs, the real bracket builds itself, and **My accuracy** shows how well you did. Predictions lock at each match's kickoff (empty counts as 0–0).
 
 ## 🏆 Scoring
 
