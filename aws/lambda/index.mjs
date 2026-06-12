@@ -16,8 +16,9 @@ const res = (code, body) => ({
 });
 
 export const handler = async (event) => {
-  const method = event.requestContext?.http?.method || "GET";
-  const path = event.rawPath || "/";
+  // Soporta Function URL / API Gateway HTTP API (payload 2.0) y payload 1.0
+  const method = event.requestContext?.http?.method || event.httpMethod || "GET";
+  const path = event.rawPath || event.path || "/";
   try {
     if (method === "GET" && path.startsWith("/player/")) {
       const id = decodeURIComponent(path.slice("/player/".length)).slice(0, 80);

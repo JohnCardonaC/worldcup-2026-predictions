@@ -21,6 +21,7 @@ A single HTML file. No installation, no account, no server. Your data never leav
 - **⟳ Update real results** — one button fetches real scores (sources, in order: fixturedownload.com → FIFA API → TheSportsDB). You can also type real scores manually.
 - **Accuracy & points** — exact scores, correct outcomes (1X2), correct teams per knockout round, and a total score.
 - **Today's matches** — big cards with kickoff time **in your local timezone**, venue, your prediction and the live result.
+- **Cloud save & global ranking (☁️)** — optional: enter your email (no password, no signup) and your predictions sync across devices. A live ranking compares your points with everyone playing.
 - **Bilingual** — switch Spanish / English anytime (🌐 button).
 - **Light & dark mode** — follows your system, or toggle it (☀️/🌙 button).
 - **Backup** — export / import all your predictions as a JSON file.
@@ -60,9 +61,17 @@ open index.html   # macOS — or just double-click it
 | Correct finalist | 8 each |
 | Correct champion | 13 |
 
+## ☁️ Cloud save & ranking
+
+Click the **☁️ button**, enter your email and a display name. No password, no verification — your predictions are saved automatically and you appear in the player ranking ("My accuracy" tab). Connect the same email on another device to continue there.
+
+How it works: your email is **never stored** — the app computes a hash locally and uses it as your ID. The backend is a tiny AWS Lambda + DynamoDB service (see [`aws/deploy.sh`](aws/deploy.sh) if you want to self-host it: run the script and paste the printed URL into `CLOUD_URL` in `index.html`).
+
+Honest note: there is no authentication. Anyone who knows which email you used could load or overwrite your cloud save. It's a game between friends — don't store anything sensitive.
+
 ## 🔒 Privacy
 
-Everything is stored in your browser's `localStorage`. There is no backend, no tracking and no account. Use **Export** to back up your predictions (e.g. before changing browser or device) and **Import** to restore them.
+Everything is stored in your browser's `localStorage`. The optional cloud feature stores only a hash of your email, your display name and your predictions. No tracking, no account. Use **Export** to back up your predictions and **Import** to restore them.
 
 ## ⚠️ Limitations
 

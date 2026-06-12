@@ -21,6 +21,7 @@ Un solo archivo HTML. Sin instalación, sin cuenta, sin servidor. Tus datos nunc
 - **⟳ Actualizar resultados reales** — un botón trae los marcadores reales (fuentes, en orden: fixturedownload.com → API de FIFA → TheSportsDB). También puedes escribirlos a mano.
 - **Aciertos y puntos** — marcadores exactos, resultados (1X2), equipos acertados por ronda eliminatoria y puntaje total.
 - **Partidos de hoy** — tarjetas grandes con la hora **en tu zona horaria**, sede, tu predicción y el resultado en vivo.
+- **Guardado en la nube y ranking global (☁️)** — opcional: escribe tu correo (sin contraseña, sin registro) y tus predicciones se sincronizan entre dispositivos. Un ranking en vivo compara tus puntos con todos los que juegan.
 - **Bilingüe** — cambia entre español e inglés cuando quieras (botón 🌐).
 - **Modo claro y oscuro** — sigue tu sistema, o cámbialo con el botón ☀️/🌙.
 - **Respaldo** — exporta / importa todas tus predicciones como archivo JSON.
@@ -60,9 +61,17 @@ open index.html   # macOS — o simplemente doble clic
 | Finalista correcto | 8 c/u |
 | Campeón correcto | 13 |
 
+## ☁️ Guardado en la nube y ranking
+
+Haz clic en el **botón ☁️**, escribe tu correo y un nombre. Sin contraseña ni verificación — tus predicciones se guardan solas y apareces en el ranking de jugadores (pestaña "Mis aciertos"). Conecta el mismo correo en otro dispositivo para continuar ahí.
+
+Cómo funciona: tu correo **nunca se almacena** — la app calcula una huella (hash) localmente y la usa como tu identificador. El backend es un servicio mínimo en AWS Lambda + DynamoDB (mira [`aws/deploy.sh`](aws/deploy.sh) si quieres montar el tuyo: corre el script y pega la URL que imprime en `CLOUD_URL` dentro de `index.html`).
+
+Nota honesta: no hay autenticación. Cualquiera que sepa qué correo usaste podría cargar o sobreescribir tu guardado. Es un juego entre amigos — no guardes nada sensible.
+
 ## 🔒 Privacidad
 
-Todo se guarda en el `localStorage` de tu navegador. No hay backend, ni rastreo, ni cuentas. Usa **Exportar** para respaldar tus predicciones (por ejemplo antes de cambiar de navegador o equipo) e **Importar** para restaurarlas.
+Todo se guarda en el `localStorage` de tu navegador. La función opcional de nube almacena solo una huella de tu correo, tu nombre visible y tus predicciones. Sin rastreo ni cuentas. Usa **Exportar** para respaldar tus predicciones e **Importar** para restaurarlas.
 
 ## ⚠️ Limitaciones
 

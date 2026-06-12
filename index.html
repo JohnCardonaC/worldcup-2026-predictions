@@ -897,7 +897,7 @@ function applyResults(list){
   return n;
 }
 /* ============ NUBE (backend opcional Lambda+DynamoDB) ============ */
-const CLOUD_URL=""; // vacío = la función de nube se oculta y la app es 100% local
+const CLOUD_URL="https://ue3b6ehqrf.execute-api.us-east-1.amazonaws.com/"; // vacío = la función de nube se oculta y la app es 100% local
 const cloudOn=()=>CLOUD_URL.startsWith('http');
 let cloudStatus='ok', cloudTimer=null, RANK=null;
 async function hashId(email){
