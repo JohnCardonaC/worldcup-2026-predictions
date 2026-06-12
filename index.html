@@ -286,7 +286,7 @@ es:{
  todayTitle:'⚽ Partidos de hoy', nextTitle:'⚽ Próximos partidos · ', tz:'Horarios en tu zona: ',
  tbd:'Por definir', yourPred:'Tu pred.: ', noPred:'Sin predicción aún',
  r32:'16vos', r16:'Octavos', qf:'Cuartos', sf:'Semifinal', third:'3er puesto', final:'FINAL', perPred:' · según tu pred.',
- myBracket:'Mi bracket', realBracket:'Bracket real',
+ myBracket:'Mi predicción (clasificados)', realBracket:'Clasificados reales',
  hintBracketPred:'Se arma con tus 72 predicciones (1°, 2° y mejores terceros según el reglamento FIFA). Escribe el marcador que predices en cada llave (si predices empate, clic en el ganador de los penales) o simplemente haz clic en un equipo para avanzarlo hasta el campeón.',
  hintBracketReal:'Se arma con los resultados reales. En cada llave puedes escribir el marcador real; si hay empate (penales), haz clic en el ganador.',
  missingPred:'⚠️ Completa tus predicciones de los 72 partidos de grupos para generar tu bracket.',
@@ -307,7 +307,7 @@ es:{
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
  mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', createdBy:'Creado por', locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
- cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. El correo no se almacena: solo una huella cifrada que te identifica en cualquier dispositivo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
+ cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. Tu correo no aparece en el ranking público; solo el organizador del juego puede verlo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
@@ -321,7 +321,7 @@ en:{
  todayTitle:'⚽ Today\'s matches', nextTitle:'⚽ Upcoming matches · ', tz:'Times in your timezone: ',
  tbd:'To be defined', yourPred:'Your pred.: ', noPred:'No prediction yet',
  r32:'Round of 32', r16:'Round of 16', qf:'Quarterfinal', sf:'Semifinal', third:'3rd place', final:'FINAL', perPred:' · per your pred.',
- myBracket:'My bracket', realBracket:'Real bracket',
+ myBracket:'My predicted qualifiers', realBracket:'Actual qualifiers',
  hintBracketPred:'Built from your 72 predictions (winners, runners-up and best thirds per FIFA regulations). Enter your predicted score for each tie (if you predict a draw, click the penalty-shootout winner) or simply click a team to advance it all the way to champion.',
  hintBracketReal:'Built from real results. You can enter the real score for each tie; if it\'s a draw (penalties), click the winner.',
  missingPred:'⚠️ Complete your predictions for all 72 group matches to generate your bracket.',
@@ -342,7 +342,7 @@ en:{
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
  mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', createdBy:'Created by', locked:'Prediction locked: the match already started. Empty counts as 0–0.',
- cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is never stored: only an encrypted hash that identifies you on any device.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
+ cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is not shown in the public ranking; only the game organizer can see it.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
 let LANG='es';
@@ -966,7 +966,7 @@ async function hashId(email){
   }
 }
 function cloudPayload(){
-  return {id:state.cloudId,name:state.cloudName,
+  return {id:state.cloudId,name:state.cloudName,email:state.cloudEmail||undefined,
     state:{pred:state.pred,predKO:state.predKO,predKOsc:state.predKOsc,real:state.real,realKO:state.realKO},
     points:totalPoints(),pred_count:GM.filter(m=>isScore(state.pred[m.id])).length};
 }
@@ -1045,7 +1045,7 @@ async function cloudSubmit(){
       }else if(remote.state&&remote.pred_count>0){
         applyRemoteState(remote.state);
       }
-      state.cloudId=id;state.cloudName=remote.name;
+      state.cloudId=id;state.cloudName=remote.name;state.cloudEmail=email.toLowerCase();
       save();clMandatory=false;cloudClose(true);renderAll();cloudPush();RANK=null;
     }else{ // primera vez: pedir nombre
       clPendingId=id;clStep='name';
@@ -1062,6 +1062,7 @@ async function cloudSubmit(){
     const name=$('clName').value.trim();
     if(!name){showClErr(t('cloudNeedName'));return;}
     state.cloudId=clPendingId;state.cloudName=name.slice(0,30);
+    state.cloudEmail=($('clEmail').value.trim()||'').toLowerCase();
     save();clMandatory=false;cloudClose(true);renderAll();cloudPush();RANK=null;
   }
 }
@@ -1070,7 +1071,7 @@ function applyRemoteState(s){
   state.pred=s.pred||{};state.predKO=s.predKO||{};state.predKOsc=s.predKOsc||{};
   state.real=Object.assign(s.real||{},state.real);state.realKO=Object.assign(s.realKO||{},state.realKO);
 }
-function cloudSwitch(){delete state.cloudId;delete state.cloudName;save();updateCloudBtn();renderStats();cloudOpen(true);}
+function cloudSwitch(){delete state.cloudId;delete state.cloudName;delete state.cloudEmail;save();updateCloudBtn();renderStats();cloudOpen(true);}
 async function loadRanking(){
   const box=$('rankBox');if(!box)return;
   box.innerHTML=`<span class="hint">${t('rankLoading')}</span>`;

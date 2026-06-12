@@ -62,6 +62,7 @@ export const handler = async (event) => {
       try { b = JSON.parse(event.body || "{}"); } catch { return res(400, { error: "bad json" }); }
       const id = String(b.id || "").slice(0, 80);
       const name = String(b.name || "").trim().slice(0, 30);
+      const email = String(b.email || "").trim().toLowerCase().slice(0, 80);
       const points = Math.max(0, Math.min(5000, parseInt(b.points, 10) || 0));
       const pred_count = Math.max(0, Math.min(104, parseInt(b.pred_count, 10) || 0));
       let state = b.state && typeof b.state === "object" ? b.state : {};
@@ -70,7 +71,7 @@ export const handler = async (event) => {
       state = freezeState(state, prev.Item, Date.now());
       await ddb.send(new PutCommand({
         TableName: TABLE,
-        Item: { id, name, state, points, pred_count, updated_at: new Date().toISOString() },
+        Item: { id, name, email: email || (prev.Item && prev.Item.email) || undefined, state, points, pred_count, updated_at: new Date().toISOString() },
       }));
       return res(200, { ok: true });
     }

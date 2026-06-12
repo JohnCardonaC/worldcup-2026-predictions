@@ -65,13 +65,13 @@ open index.html   # macOS — or just double-click it
 
 When you open the game it asks for your **email** (no password, no verification): if it's your first time it also asks for a display name; if you're already registered it logs you straight in, and if your session is already open it asks nothing. Your predictions save automatically and you appear in the player ranking ("My accuracy" tab). Use the same email on another device to continue there, or the ☁️ button to sync/switch account.
 
-How it works: your email is **never stored** — the app computes a hash locally and uses it as your ID. The backend is a tiny AWS Lambda + DynamoDB service (see [`aws/deploy.sh`](aws/deploy.sh) if you want to self-host it: run the script and paste the printed URL into `CLOUD_URL` in `index.html`).
+How it works: your email is stored with your entry so the game organizer can identify players (e.g. to contact winners). It is **never shown publicly** — the ranking only displays your chosen name. The backend is a tiny AWS Lambda + DynamoDB service (see [`aws/deploy.sh`](aws/deploy.sh) if you want to self-host it: run the script and paste the printed URL into `CLOUD_URL` in `index.html`).
 
 Honest note: there is no authentication. Anyone who knows which email you used could load or overwrite your cloud save. It's a game between friends — don't store anything sensitive.
 
 ## 🔒 Privacy
 
-Everything is stored in your browser's `localStorage`. The optional cloud feature stores only a hash of your email, your display name and your predictions. No tracking, no account. Use **Export** to back up your predictions and **Import** to restore them.
+Everything is stored in your browser's `localStorage` and synced to the game's database: your email (visible only to the organizer, never in the public ranking), your display name and your predictions. No tracking beyond that. Use **Export** to back up your predictions and **Import** to restore them.
 
 ## ⚠️ Limitations
 

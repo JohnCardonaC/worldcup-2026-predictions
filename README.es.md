@@ -65,13 +65,13 @@ open index.html   # macOS — o simplemente doble clic
 
 Al abrir el juego te pide tu **correo** (sin contraseña ni verificación): si es tu primera vez también te pide un nombre; si ya estás registrado entras directo, y si tu sesión ya está abierta no te pide nada. Tus predicciones se guardan solas y apareces en el ranking de jugadores (pestaña "Mis aciertos"). Usa el mismo correo en otro dispositivo para continuar ahí, o el botón ☁️ para sincronizar/cambiar de cuenta.
 
-Cómo funciona: tu correo **nunca se almacena** — la app calcula una huella (hash) localmente y la usa como tu identificador. El backend es un servicio mínimo en AWS Lambda + DynamoDB (mira [`aws/deploy.sh`](aws/deploy.sh) si quieres montar el tuyo: corre el script y pega la URL que imprime en `CLOUD_URL` dentro de `index.html`).
+Cómo funciona: tu correo se guarda junto con tu registro para que el organizador del juego pueda identificar a los jugadores (por ejemplo, para contactar al ganador). **Nunca se muestra públicamente** — el ranking solo muestra tu nombre elegido. El backend es un servicio mínimo en AWS Lambda + DynamoDB (mira [`aws/deploy.sh`](aws/deploy.sh) si quieres montar el tuyo: corre el script y pega la URL que imprime en `CLOUD_URL` dentro de `index.html`).
 
 Nota honesta: no hay autenticación. Cualquiera que sepa qué correo usaste podría cargar o sobreescribir tu guardado. Es un juego entre amigos — no guardes nada sensible.
 
 ## 🔒 Privacidad
 
-Todo se guarda en el `localStorage` de tu navegador. La función opcional de nube almacena solo una huella de tu correo, tu nombre visible y tus predicciones. Sin rastreo ni cuentas. Usa **Exportar** para respaldar tus predicciones e **Importar** para restaurarlas.
+Todo se guarda en el `localStorage` de tu navegador y se sincroniza con la base del juego: tu correo (visible solo para el organizador, nunca en el ranking público), tu nombre elegido y tus predicciones. Sin más rastreo que eso. Usa **Exportar** para respaldar tus predicciones e **Importar** para restaurarlas.
 
 ## ⚠️ Limitaciones
 
