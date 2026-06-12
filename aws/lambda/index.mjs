@@ -63,6 +63,7 @@ export const handler = async (event) => {
       const id = String(b.id || "").slice(0, 80);
       const name = String(b.name || "").trim().slice(0, 30);
       const email = String(b.email || "").trim().toLowerCase().slice(0, 80);
+      const pub = b.pub === false ? false : true; // aparecer en el ranking público
       const points = Math.max(0, Math.min(5000, parseInt(b.points, 10) || 0));
       const pred_count = Math.max(0, Math.min(104, parseInt(b.pred_count, 10) || 0));
       let state = b.state && typeof b.state === "object" ? b.state : {};
@@ -71,7 +72,7 @@ export const handler = async (event) => {
       state = freezeState(state, prev.Item, Date.now());
       await ddb.send(new PutCommand({
         TableName: TABLE,
-        Item: { id, name, email: email || (prev.Item && prev.Item.email) || undefined, state, points, pred_count, updated_at: new Date().toISOString() },
+        Item: { id, name, email: email || (prev.Item && prev.Item.email) || undefined, pub, state, points, pred_count, updated_at: new Date().toISOString() },
       }));
       return res(200, { ok: true });
     }
@@ -81,15 +82,16 @@ export const handler = async (event) => {
       do {
         const r = await ddb.send(new ScanCommand({
           TableName: TABLE,
-          ProjectionExpression: "#n, points, pred_count, updated_at",
+          ProjectionExpression: "#n, points, pred_count, updated_at, pub",
           ExpressionAttributeNames: { "#n": "name" },
           ExclusiveStartKey: key,
         }));
         items.push(...(r.Items || []));
         key = r.LastEvaluatedKey;
       } while (key && items.length < 2000);
-      items.sort((a, b) => (b.points - a.points) || (b.pred_count - a.pred_count));
-      return res(200, { players: items.slice(0, 100), total: items.length });
+      const visible = items.filter((i) => i.pub !== false); // solo quienes aceptaron aparecer
+      visible.sort((a, b) => (b.points - a.points) || (b.pred_count - a.pred_count));
+      return res(200, { players: visible.slice(0, 100).map(({ pub, ...p }) => p), total: visible.length });
     }
     return res(404, { error: "not found" });
   } catch (e) {

@@ -63,7 +63,7 @@ open index.html   # macOS — o simplemente doble clic
 
 ## ☁️ Guardado en la nube y ranking
 
-Al abrir el juego te pide tu **correo** (sin contraseña ni verificación): si es tu primera vez también te pide un nombre; si ya estás registrado entras directo, y si tu sesión ya está abierta no te pide nada. Tus predicciones se guardan solas y apareces en el ranking de jugadores (pestaña "Mis aciertos"). Usa el mismo correo en otro dispositivo para continuar ahí, o el botón ☁️ para sincronizar/cambiar de cuenta.
+Al abrir el juego te pide tu **correo** (sin contraseña ni verificación): si es tu primera vez también te pide un nombre; si ya estás registrado entras directo, y si tu sesión ya está abierta no te pide nada. Tus predicciones se guardan solas. Al registrarte eliges si quieres **aparecer en el ranking público** o mantener tu puntaje privado (cambiable luego desde ☁️); el ranking muestra solo nombre y apellido, nunca el correo. Usa el mismo correo en otro dispositivo para continuar ahí, o el botón ☁️ para sincronizar/cambiar de cuenta.
 
 Cómo funciona: tu correo se guarda junto con tu registro para que el organizador del juego pueda identificar a los jugadores (por ejemplo, para contactar al ganador). **Nunca se muestra públicamente** — el ranking solo muestra tu nombre elegido. El backend es un servicio mínimo en AWS Lambda + DynamoDB (mira [`aws/deploy.sh`](aws/deploy.sh) si quieres montar el tuyo: corre el script y pega la URL que imprime en `CLOUD_URL` dentro de `index.html`).
 
