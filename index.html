@@ -124,6 +124,18 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .tcard .duel .mid b{color:var(--txt);font-size:20px}
 .tcard .foot{margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
 .tcard.ko{border-color:#5a4a16}
+/* CLOUD */
+#cloudModal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:200}
+#cloudModal .box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:380px;width:92%}
+#cloudModal h3{margin-bottom:6px}
+#cloudModal p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+#cloudModal input{width:100%;margin-bottom:8px;background:var(--panel2);border:1px solid var(--border);color:var(--txt);border-radius:8px;padding:9px 10px;font-size:14px}
+#cloudModal .row{display:flex;gap:8px;justify-content:flex-end;margin-top:6px;flex-wrap:wrap}
+#cloudStatus{font-size:10px;margin-left:4px}
+.rank-table{width:100%;border-collapse:collapse;font-size:13px}
+.rank-table th{text-align:left;color:var(--muted);font-weight:500;padding:4px 6px}
+.rank-table td{padding:4px 6px;border-top:1px solid var(--line)}
+.rank-table tr.me td{background:rgba(63,185,80,.12);font-weight:700}
 /* MODAL LOG */
 #updlog{position:fixed;bottom:16px;right:16px;max-width:420px;max-height:50vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px;display:none;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.6)}
 #updlog h4{margin-bottom:6px;font-size:13px}
@@ -150,6 +162,7 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   </div>
   <div class="spacer"></div>
   <div class="actions">
+    <button id="btnCloud" onclick="cloudOpen()" style="display:none">☁️</button>
     <button class="icon" id="btnTheme" onclick="toggleTheme()" title="Modo claro / oscuro · Light / dark mode">☀️</button>
     <button class="icon" id="btnLang" onclick="toggleLang()" title="Cambiar idioma / Switch language">🌐 EN</button>
     <button class="primary" id="btnUpd" onclick="actualizarResultados()">⟳ Actualizar resultados reales</button>
@@ -171,6 +184,21 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   <section id="view-stats" style="display:none"></section>
 </main>
 <div id="updlog"></div>
+<div id="cloudModal" onclick="if(event.target===this)cloudClose()">
+  <div class="box">
+    <h3 id="clTitle"></h3>
+    <p id="clDesc"></p>
+    <div id="clForm">
+      <input id="clEmail" type="email" autocomplete="email">
+      <input id="clName" maxlength="30">
+    </div>
+    <div class="row">
+      <button onclick="cloudClose()" id="clCancel"></button>
+      <button id="clDisc" style="display:none" onclick="cloudDisconnect()"></button>
+      <button class="primary" id="clGo" onclick="cloudConnect()"></button>
+    </div>
+  </div>
+</div>
 <script>
 'use strict';
 /* ================= DATOS ================= */
@@ -257,6 +285,8 @@ es:{
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
  mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste',
+ cloudBtn:'☁️ Nube', cloudTitle:'Guardar en la nube', cloudDesc:'Escribe tu correo y un nombre para el ranking. Sin contraseña. Tu correo no se almacena: solo una huella (hash) que identifica tus predicciones en cualquier dispositivo.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudConnectBtn:'Conectar', cloudCancel:'Cancelar', cloudDisc:'Desconectar', cloudAsTitle:'Nube conectada', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde conectes el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
+ rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
  title:'WORLD CUP <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
@@ -289,6 +319,8 @@ en:{
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
  mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed',
+ cloudBtn:'☁️ Cloud', cloudTitle:'Save to the cloud', cloudDesc:'Enter your email and a display name for the ranking. No password. Your email is never stored: only a hash that identifies your predictions on any device.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudConnectBtn:'Connect', cloudCancel:'Cancel', cloudDisc:'Disconnect', cloudAsTitle:'Cloud connected', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you connect the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
+ rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
 let LANG='es';
 function t(k,...a){const v=I18N[LANG][k];return typeof v==='function'?v(...a):v;}
@@ -346,7 +378,8 @@ const COMBOS_RAW="EFGHIJKL:EJIFHGLK,DFGHIJKL:HGIDJFLK,DEGHIJKL:EJIDHGLK,DEFHIJKL
 const COMBOS=(()=>{const m={};for(const e of COMBOS_RAW.split(',')){const[k,v]=e.split(':');m[k]=v;}return m;})();
 /* ================= ESTADO ================= */
 let state={pred:{},predKO:{},predKOsc:{},real:{},realKO:{},lastUpd:null,lang:'es',theme:null};
-function save(){try{localStorage.setItem('mundial2026',JSON.stringify(state));}catch(e){}}
+function save(){try{localStorage.setItem('mundial2026',JSON.stringify(state));}catch(e){}
+  if(typeof scheduleCloudPush==='function')try{scheduleCloudPush();}catch(e){}}
 function load(){try{const s=localStorage.getItem('mundial2026');if(s)state=Object.assign(state,JSON.parse(s));}catch(e){}
   LANG=(state.lang==='en')?'en':'es';applyTheme();}
 function toggleLang(){LANG=LANG==='es'?'en':'es';state.lang=LANG;save();renderAll();}
@@ -719,7 +752,12 @@ function renderStats(){
       <div class="srow"><span>${t('finalists')}</span><span>${[101,102].map(m=>pw[m]?tlabel(pw[m],true):'—').join(' · ')}</span></div>
       <div class="srow"><span>${t('thirdsQ')}</span><span style="font-size:12px">${pc.thirdsRank.slice(0,8).map(x=>x.g).join(', ')}</span></div></div>`;
   }
+  if(cloudOn()){
+    h+=`<div class="scard" style="grid-column:1/-1"><h3>${t('rankTitle')} <button style="float:right;font-size:11px" onclick="loadRanking()">${t('rankRefresh')}</button></h3>
+      <div id="rankBox">${state.cloudId?`<span class="hint">${t('rankLoading')}</span>`:`<span class="hint">${t('rankOff')}</span>`}</div></div>`;
+  }
   h+=`</div>`;v.innerHTML=h;
+  if(cloudOn()&&RANK)renderRanking();
 }
 /* ============ ACTUALIZACIÓN DE RESULTADOS ============ */
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z ]/g,'').trim();}
@@ -858,6 +896,99 @@ function applyResults(list){
   }
   return n;
 }
+/* ============ NUBE (backend opcional Lambda+DynamoDB) ============ */
+const CLOUD_URL=""; // vacío = la función de nube se oculta y la app es 100% local
+const cloudOn=()=>CLOUD_URL.startsWith('http');
+let cloudStatus='ok', cloudTimer=null, RANK=null;
+async function hashId(email){
+  const s='wc2026:'+email.trim().toLowerCase();
+  try{
+    const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+    return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('').slice(0,40);
+  }catch(e){ // fallback sin secure context
+    let h1=0x811c9dc5,h2=0x01000193;
+    for(let i=0;i<s.length;i++){h1=Math.imul(h1^s.charCodeAt(i),0x01000193)>>>0;h2=Math.imul(h2^s.charCodeAt(i),0x85ebca6b)>>>0;}
+    return ('00000000'+h1.toString(16)).slice(-8)+('00000000'+h2.toString(16)).slice(-8);
+  }
+}
+function cloudPayload(){
+  return {id:state.cloudId,name:state.cloudName,
+    state:{pred:state.pred,predKO:state.predKO,predKOsc:state.predKOsc,real:state.real,realKO:state.realKO},
+    points:totalPoints(),pred_count:GM.filter(m=>isScore(state.pred[m.id])).length};
+}
+async function cloudPush(){
+  if(!cloudOn()||!state.cloudId)return;
+  setCloudStatus('saving');
+  try{
+    const r=await fetch(CLOUD_URL+'player',{method:'PUT',headers:{'content-type':'application/json'},
+      body:JSON.stringify(cloudPayload()),signal:AbortSignal.timeout(10000)});
+    setCloudStatus(r.ok?'ok':'err');
+  }catch(e){setCloudStatus('err');}
+}
+function scheduleCloudPush(){
+  if(!cloudOn()||!state.cloudId)return;
+  clearTimeout(cloudTimer);setCloudStatus('saving');
+  cloudTimer=setTimeout(cloudPush,2500);
+}
+function setCloudStatus(s){cloudStatus=s;updateCloudBtn();}
+function updateCloudBtn(){
+  const b=$('btnCloud');if(!b)return;
+  if(!cloudOn()){b.style.display='none';return;}
+  b.style.display='';
+  b.innerHTML=state.cloudId?`☁️ ${state.cloudName} <span id="cloudStatus">${t(cloudStatus==='saving'?'cloudSaving':cloudStatus==='err'?'cloudErr':'cloudOk')}</span>`:t('cloudBtn');
+}
+function cloudOpen(){
+  const m=$('cloudModal');m.style.display='flex';
+  const conn=!!state.cloudId;
+  $('clTitle').textContent=conn?t('cloudAsTitle'):t('cloudTitle');
+  $('clDesc').innerHTML=conn?t('cloudAsDesc',state.cloudName):t('cloudDesc');
+  $('clForm').style.display=conn?'none':'';
+  $('clEmail').placeholder=t('cloudEmailPh');$('clName').placeholder=t('cloudNamePh');
+  $('clCancel').textContent=t('cloudCancel');
+  $('clDisc').style.display=conn?'':'none';$('clDisc').textContent=t('cloudDisc');
+  $('clGo').textContent=conn?t('cloudSyncNow'):t('cloudConnectBtn');
+}
+function cloudClose(){$('cloudModal').style.display='none';}
+async function cloudConnect(){
+  if(state.cloudId){cloudPush();cloudClose();return;} // ya conectado → sync manual
+  const email=$('clEmail').value.trim(),name=$('clName').value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert(t('cloudBadEmail'));return;}
+  if(!name){alert(t('cloudNeedName'));return;}
+  const id=await hashId(email);
+  let remote=null;
+  try{
+    const r=await fetch(CLOUD_URL+'player/'+id,{signal:AbortSignal.timeout(10000)});
+    if(r.ok)remote=(await r.json()).item;
+  }catch(e){}
+  const localCount=GM.filter(m=>isScore(state.pred[m.id])).length;
+  if(remote&&remote.state&&remote.pred_count>0&&confirm(t('cloudConflict',remote.pred_count,localCount))){
+    const s=remote.state;
+    state.pred=s.pred||{};state.predKO=s.predKO||{};state.predKOsc=s.predKOsc||{};
+    state.real=Object.assign(s.real||{},state.real);state.realKO=Object.assign(s.realKO||{},state.realKO);
+  }
+  state.cloudId=id;state.cloudName=name.slice(0,30);
+  save();cloudClose();renderAll();cloudPush();
+}
+function cloudDisconnect(){delete state.cloudId;delete state.cloudName;save();cloudClose();updateCloudBtn();renderStats();}
+async function loadRanking(){
+  const box=$('rankBox');if(!box)return;
+  box.innerHTML=`<span class="hint">${t('rankLoading')}</span>`;
+  try{
+    const r=await fetch(CLOUD_URL+'ranking',{signal:AbortSignal.timeout(10000)});
+    RANK=(await r.json()).players||[];
+    renderRanking();
+  }catch(e){box.innerHTML=`<span class="hint">${t('cloudErr')}</span>`;}
+}
+function renderRanking(){
+  const box=$('rankBox');if(!box)return;
+  if(!RANK||!RANK.length){box.innerHTML=`<span class="hint">${t('rankEmpty')}</span>`;return;}
+  let h=`<table class="rank-table"><tr><th>#</th><th>${t('rankPlayer')}</th><th>${t('rankPts')}</th><th>${t('rankPreds')}</th></tr>`;
+  RANK.forEach((p,i)=>{
+    const me=state.cloudName&&p.name===state.cloudName;
+    h+=`<tr class="${me?'me':''}"><td>${i+1}</td><td>${String(p.name||'').replace(/[<>&]/g,'')}</td><td><b>${p.points|0}</b></td><td>${p.pred_count|0}/72</td></tr>`;
+  });
+  box.innerHTML=h+'</table>';
+}
 /* ============ EXPORT / IMPORT / TABS ============ */
 function exportar(){
   const blob=new Blob([JSON.stringify(state,null,1)],{type:'application/json'});
@@ -871,7 +1002,8 @@ function importar(inp){
   rd.readAsText(f);inp.value='';
 }
 let tab='grupos';
-function setTab(tb){tab=tb;['grupos','bracket','stats'].forEach(x=>{$('view-'+x).style.display=x===tb?'':'none';$('tab-'+x).classList.toggle('on',x===tb);});}
+function setTab(tb){tab=tb;['grupos','bracket','stats'].forEach(x=>{$('view-'+x).style.display=x===tb?'':'none';$('tab-'+x).classList.toggle('on',x===tb);});
+  if(tb==='stats'&&cloudOn()&&!RANK)loadRanking();}
 function playedCount(){
   let n=GM.filter(m=>isScore(state.real[m.id])).length;
   for(const mid of ALL_KO_IDS){const r=state.realKO[mid];if(r&&isScore([r.h,r.a]))n++;}
@@ -893,6 +1025,7 @@ function renderChrome(){
   $('tab-stats').textContent=t('tabStats');
   document.documentElement.lang=LANG;
   document.title=LANG==='es'?'Mundial 2026 · Predicciones':'World Cup 2026 · Predictions';
+  updateCloudBtn();
 }
 function renderAll(){
   renderChrome();renderGrupos();renderBracket();renderStats();
