@@ -26,13 +26,13 @@ body.light{
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:14px;transition:background .25s,color .25s}
 /* ===== HEADER ===== */
-header{position:sticky;top:0;z-index:50;background:var(--panel);background-image:var(--headglow);border-bottom:1px solid var(--border);padding:12px 18px 10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header{position:sticky;top:0;z-index:50;background:var(--panel);background-image:var(--headglow);border-bottom:1px solid var(--border);padding:22px 24px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px;min-width:0}
-.cup{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;
+.cup{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;
   background:linear-gradient(145deg,rgba(255,200,40,.22),rgba(255,200,40,.05));border:1px solid rgba(214,160,30,.45);box-shadow:0 2px 10px rgba(0,0,0,.25)}
-.ttl h1{font-size:20px;font-weight:900;letter-spacing:1.5px;line-height:1.05;text-transform:uppercase}
+.ttl h1{font-size:25px;font-weight:900;letter-spacing:2.5px;line-height:1.1;text-transform:uppercase}
 .ttl h1 .y{background:linear-gradient(90deg,var(--grad1),var(--grad2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.ttl .sub{font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ttl .sub{font-size:12px;color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .ttl .sub .prg{display:inline-flex;align-items:center;gap:5px}
 .ttl .sub .prgbar{width:64px;height:5px;border-radius:3px;background:var(--panel2);overflow:hidden;border:1px solid var(--line)}
 .ttl .sub .prgbar i{display:block;height:100%;background:linear-gradient(90deg,var(--grad1),var(--grad2))}
@@ -48,9 +48,10 @@ button:disabled{opacity:.5;cursor:wait;transform:none}
 #lastUpd{font-size:10.5px;color:var(--muted);width:100%;text-align:right;margin-top:-4px}
 #lastUpd:empty{display:none}
 .stripe{height:4px;background:linear-gradient(90deg,#ce1126 0%,#ce1126 18%,#f5f5f5 22%,#006847 38%,#006847 60%,#f5f5f5 64%,#0a3161 80%,#0a3161 100%);opacity:.9}
-nav{display:flex;gap:4px;background:var(--panel);padding:0 16px;border-bottom:1px solid var(--border)}
-nav button{border:none;background:none;padding:10px 14px;border-bottom:2px solid transparent;border-radius:0;font-size:14px;color:var(--muted)}
-nav button.on{color:var(--txt);border-bottom-color:var(--acc);font-weight:600}
+nav{display:flex;gap:8px;background:var(--panel);padding:10px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+nav button{border:1px solid transparent;background:transparent;padding:11px 22px;border-radius:11px;font-size:15px;font-weight:600;color:var(--muted);letter-spacing:.3px}
+nav button:hover{border-color:var(--border);transform:none}
+nav button.on{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(31,111,235,.35)}
 main{padding:16px;max-width:1500px;margin:0 auto}
 .hint{color:var(--muted);font-size:12px;margin-bottom:12px;line-height:1.5}
 /* GRUPOS */
@@ -108,11 +109,11 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .bar{height:6px;background:var(--panel2);border-radius:3px;margin-top:6px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--acc)}
 /* HOY */
-.todaywrap{margin-bottom:18px}
+.todaywrap{margin-bottom:20px;text-align:center}
 .todaywrap h2{font-size:15px;margin-bottom:2px}
 .todaywrap .tz{font-size:11px;color:var(--muted);margin-bottom:10px}
-.todaycards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
-.tcard{background:linear-gradient(160deg,var(--tcard1),var(--tcard2));border:1px solid var(--tcardb);border-radius:12px;padding:14px}
+.todaycards{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.tcard{background:linear-gradient(160deg,var(--tcard1),var(--tcard2));border:1px solid var(--tcardb);border-radius:12px;padding:14px;width:310px;max-width:100%;text-align:left}
 .tcard .when{display:flex;align-items:baseline;gap:8px}
 .tcard .hour{font-size:26px;font-weight:800;color:var(--acc2)}
 .tcard .venue{font-size:11px;color:var(--muted)}
@@ -124,6 +125,14 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .tcard .duel .mid b{color:var(--txt);font-size:20px}
 .tcard .foot{margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
 .tcard.ko{border-color:#5a4a16}
+.dd{position:relative;display:inline-block}
+.dd summary{list-style:none;cursor:pointer;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px}
+.dd summary::-webkit-details-marker{display:none}
+.dd summary:hover{border-color:var(--acc2)}
+.dd[open] summary{border-color:var(--acc2)}
+.ddmenu{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:160px;z-index:120;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.ddmenu button{text-align:left;border:none;background:transparent;width:100%}
+.ddmenu button:hover{background:var(--panel2);transform:none}
 /* CLOUD */
 #cloudModal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:200}
 #cloudModal .box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:380px;width:92%}
@@ -136,6 +145,8 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .rank-table th{text-align:left;color:var(--muted);font-weight:500;padding:4px 6px}
 .rank-table td{padding:4px 6px;border-top:1px solid var(--line)}
 .rank-table tr.me td{background:rgba(63,185,80,.12);font-weight:700}
+.pair input:disabled{opacity:.55;cursor:not-allowed;background:var(--panel2)}
+.lockico{font-size:10px;color:var(--muted)}
 /* MODAL LOG */
 #updlog{position:fixed;bottom:16px;right:16px;max-width:420px;max-height:50vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px;display:none;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.6)}
 #updlog h4{margin-bottom:6px;font-size:13px}
@@ -150,7 +161,7 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 <body>
 <header>
   <div class="brand">
-    <div class="cup">🏆</div>
+    <div class="cup"><svg viewBox="0 0 64 44" width="36" aria-label="sombrero"><ellipse cx="32" cy="32" rx="29" ry="9" fill="#e8b93e" stroke="#a87f1f" stroke-width="2"/><path d="M20 31 Q20 7 32 7 Q44 7 44 31 Z" fill="#e8b93e" stroke="#a87f1f" stroke-width="2"/><path d="M22 24 Q32 28 42 24" fill="none" stroke="#c2474b" stroke-width="2.5"/><path d="M5 33 Q32 46 59 33" fill="none" stroke="#a87f1f" stroke-width="2"/></svg></div>
     <div class="ttl">
       <h1 id="appTitle">MUNDIAL <span class="y">2026</span></h1>
       <div class="sub">
@@ -165,8 +176,13 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
     <button id="btnCloud" onclick="cloudOpen()" style="display:none">☁️</button>
     <button class="icon" id="btnTheme" onclick="toggleTheme()" title="Modo claro / oscuro · Light / dark mode">☀️</button>
     <button class="icon" id="btnLang" onclick="toggleLang()" title="Cambiar idioma / Switch language">🌐 EN</button>
-    <button id="btnExp" onclick="exportar()">Exportar</button>
-    <button id="btnImp" onclick="document.getElementById('impfile').click()">Importar</button>
+    <details class="dd" id="ddActions">
+      <summary id="ddLabel">⚙️ Acciones ▾</summary>
+      <div class="ddmenu">
+        <button id="btnExp" onclick="exportar();document.getElementById('ddActions').open=false">Exportar</button>
+        <button id="btnImp" onclick="document.getElementById('impfile').click();document.getElementById('ddActions').open=false">Importar</button>
+      </div>
+    </details>
     <input type="file" id="impfile" accept=".json" style="display:none" onchange="importar(this)">
   </div>
   <span id="lastUpd"></span>
@@ -257,10 +273,10 @@ const TEAMS={
 /* ================= IDIOMA / LANGUAGE ================= */
 const I18N={
 es:{
- title:'MUNDIAL <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
+ title:'MUNDIAL MÉXICO <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
  exp:'Exportar', imp:'Importar', lastUpd:'Últ. actualización: ',
  tabGroups:'Fase de grupos', tabBracket:'Eliminatorias', tabStats:'Mis aciertos',
- hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) o a mano si lo prefieres. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo.',
+ hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) o a mano si lo prefieres. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
  autoUpdated:n=>`⚽ ${n} resultado(s) nuevos cargados automáticamente`, autoNote:' · auto cada 3 h', starCta:'¿Te gusta el juego? Dale una ⭐ en',
  group:'Grupo', pillReal:'tabla real', pillPred:'tabla según tu predicción',
  thTeam:'Equipo', thMatch:'Partido', thPred:'Mi pred.', thReal:'Real',
@@ -287,15 +303,15 @@ es:{
  updating:'Actualizando resultados…', srcOf:'Fuente: ', tryFIFA:'Probando FIFA…', tryTSDB:'Probando TheSportsDB…', failTSDB:'TheSportsDB falló: ', notAvail:' no disponible ',
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
- mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste',
+ mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
  cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. El correo no se almacena: solo una huella cifrada que te identifica en cualquier dispositivo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
- title:'WORLD CUP <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
+ title:'WORLD CUP MEXICO <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
  exp:'Export', imp:'Import', lastUpd:'Last update: ',
  tabGroups:'Group stage', tabBracket:'Knockout', tabStats:'My accuracy',
- hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) or manually if you prefer. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss.',
+ hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) or manually if you prefer. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
  autoUpdated:n=>`⚽ ${n} new result(s) loaded automatically`, autoNote:' · auto every 3 h', starCta:'Enjoying the game? Star it on',
  group:'Group', pillReal:'real table', pillPred:'table per your prediction',
  thTeam:'Team', thMatch:'Match', thPred:'My pred.', thReal:'Real',
@@ -322,7 +338,7 @@ en:{
  updating:'Updating results…', srcOf:'Source: ', tryFIFA:'Trying FIFA…', tryTSDB:'Trying TheSportsDB…', failTSDB:'TheSportsDB failed: ', notAvail:' unavailable ',
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
- mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed',
+ mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', locked:'Prediction locked: the match already started. Empty counts as 0–0.',
  cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is never stored: only an encrypted hash that identifies you on any device.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
@@ -487,10 +503,21 @@ function realWinners(cl){
   }
   return w;
 }
+/* ============ CIERRE DE PREDICCIONES (anti-trampa) ============ */
+function hasStarted(ts){return ts&&Date.now()>=new Date(ts).getTime();}
+function gmStarted(m){return hasStarted(m.ts);}
+function koStarted(mid){const k=KICKOFF[String(mid)];return k?hasStarted(k.ts):false;}
+// Predicciones efectivas: partido iniciado sin predicción cuenta como 0-0
+function predEffective(){
+  const out=Object.assign({},state.pred);
+  for(const m of GM)if(!isScore(out[m.id])&&gmStarted(m))out[m.id]=[0,0];
+  return out;
+}
 /* ============ ESTADÍSTICAS DE ACIERTO ============ */
 function groupStats(){
   let played=0,outcome=0,exact=0;
-  for(const m of GM){const p=state.pred[m.id],r=state.real[m.id];
+  const pe=predEffective();
+  for(const m of GM){const p=pe[m.id],r=state.real[m.id];
     if(!isScore(p)||!isScore(r))continue; played++;
     if(p[0]===r[0]&&p[1]===r[1]){exact++;outcome++;}
     else if(Math.sign(p[0]-p[1])===Math.sign(r[0]-r[1]))outcome++;
@@ -498,7 +525,8 @@ function groupStats(){
   return {played,outcome,exact};
 }
 function bracketStats(){
-  const pc=allGroupsComplete(state.pred)?classify(state.pred):null;
+  const pe=predEffective();
+  const pc=allGroupsComplete(pe)?classify(pe):null;
   const rc=allGroupsComplete(state.real)?classify(state.real):null;
   const pw=predWinners(pc),rw=realWinners(rc);
   const P=teamsReachingRounds(pc,pw),R=teamsReachingRounds(rc,rw);
@@ -512,7 +540,8 @@ function bracketStats(){
 const PTS={exact:3,outcome:1,r32:1,r16:2,qf:3,sf:5,fin:8,champ:13};
 // Marcadores en eliminatorias: comparables solo cuando tu llave tiene los mismos 2 equipos que la real
 function koScoreStats(){
-  const pc=allGroupsComplete(state.pred)?classify(state.pred):null;
+  const pe=predEffective();
+  const pc=allGroupsComplete(pe)?classify(pe):null;
   const rc=allGroupsComplete(state.real)?classify(state.real):null;
   if(!pc||!rc)return {comparable:0,outcome:0,exact:0};
   const pw=predWinners(pc),rw=realWinners(rc);
@@ -548,7 +577,8 @@ function allScheduled(){
   const out=GM.map(m=>({id:m.id,ts:m.ts,v:m.v,h:m.h,a:m.a,ko:false,label:t('group')+' '+m.g,
     pred:state.pred[m.id],real:state.real[m.id]}));
   const rc=allGroupsComplete(state.real)?classify(state.real):null;
-  const pc=allGroupsComplete(state.pred)?classify(state.pred):null;
+  const pe2=predEffective();
+  const pc=allGroupsComplete(pe2)?classify(pe2):null;
   const rw=realWinners(rc),pw=predWinners(pc);
   for(const mid of ALL_KO_IDS){
     const k=KICKOFF[String(mid)];if(!k)continue;
@@ -595,7 +625,7 @@ function todaySectionHTML(){
 function fdate(d){return t('mdShort',d);}
 function tlabel(tm,short){const T=TEAMS[tm];if(!T)return '—';const nm=LANG==='es'?T.n:T.e;return `${T.f} ${short?tm:nm}`;}
 function hitMark(m){
-  const p=state.pred[m.id],r=state.real[m.id];
+  const p=isScore(state.pred[m.id])?state.pred[m.id]:(gmStarted(m)?[0,0]:null),r=state.real[m.id];
   if(!isScore(p)||!isScore(r))return '';
   if(p[0]===r[0]&&p[1]===r[1])return `<span class="hit-exact" title="${t('exactScore')}">●</span>`;
   if(Math.sign(p[0]-p[1])===Math.sign(r[0]-r[1]))return `<span class="hit-out" title="${t('outcomeHit')}">◐</span>`;
@@ -605,8 +635,9 @@ function renderGrupos(){
   const v=$('view-grupos');
   let h=todaySectionHTML();
   h+=`<p class="hint">${t('hintGroups')}</p><div class="groups">`;
+  const pe=predEffective();
   for(const g of GL){
-    const tb=tableFor(g,state.pred);
+    const tb=tableFor(g,pe);
     const tbR=tableFor(g,state.real);
     const useReal=groupComplete(g,state.real);
     h+=`<div class="gcard"><h2><span>${t('group')} <span class="gname">${g}</span></span><span class="pill">${useReal?t('pillReal'):t('pillPred')}</span></h2>`;
@@ -617,9 +648,10 @@ function renderGrupos(){
     h+=`<div class="collabels"><span></span><span>${t('thMatch')}</span><span>${t('thPred')}</span><span></span><span>${t('thReal')}</span><span></span></div>`;
     for(const m of GM.filter(x=>x.g===g)){
       const p=state.pred[m.id]||['',''],r=state.real[m.id]||['',''];
+      const lk=gmStarted(m);
       h+=`<div class="mrow" title="${m.v||''}"><span class="date">J${m.md}<br>${fdate(m.d)}${m.ts?'<br>'+hora(m.ts):''}</span>
       <div class="teams"><span>${tlabel(m.h)}</span><span>${tlabel(m.a)}</span></div>
-      <div class="pair"><input id="in-pred-${m.id}-0" inputmode="numeric" value="${p[0]??''}" onchange="setScore('pred','${m.id}',0,this)"><input id="in-pred-${m.id}-1" inputmode="numeric" value="${p[1]??''}" onchange="setScore('pred','${m.id}',1,this)"></div>
+      <div class="pair" ${lk?`title="${t('locked')}"`:''}><input id="in-pred-${m.id}-0" inputmode="numeric" value="${p[0]??(lk?0:'')}" ${lk?'disabled':''} onchange="setScore('pred','${m.id}',0,this)"><input id="in-pred-${m.id}-1" inputmode="numeric" value="${p[1]??(lk?0:'')}" ${lk?'disabled':''} onchange="setScore('pred','${m.id}',1,this)"></div>
       <span class="vsep">·</span>
       <div class="pair real"><input id="in-real-${m.id}-0" inputmode="numeric" value="${r[0]??''}" onchange="setScore('real','${m.id}',0,this)"><input id="in-real-${m.id}-1" inputmode="numeric" value="${r[1]??''}" onchange="setScore('real','${m.id}',1,this)"></div>
       <span class="hitmark">${hitMark(m)}</span></div>`;
@@ -629,6 +661,7 @@ function renderGrupos(){
   h+=`</div>`;v.innerHTML=h;
 }
 function setScore(kind,mid,idx,inp){
+  if(kind==='pred'&&gmStarted(GM_BY_ID[mid])){renderGrupos();return;} // cerrada al iniciar el partido
   const v=inp.value.trim();
   const cur=state[kind][mid]||[null,null];
   cur[idx]=v===''?null:Math.max(0,parseInt(v,10)||0);
@@ -644,8 +677,9 @@ function renderAllPreserveFocus(){
 let kmode='pred';
 function renderBracket(){
   const v=$('view-bracket');
-  const predOK=allGroupsComplete(state.pred), realOK=allGroupsComplete(state.real);
-  const cl=kmode==='pred'?(predOK?classify(state.pred):null):(realOK?classify(state.real):null);
+  const realOK=allGroupsComplete(state.real);
+  const pe=predEffective();
+  const cl=kmode==='pred'?(allGroupsComplete(pe)?classify(pe):null):(realOK?classify(state.real):null);
   const winners=kmode==='pred'?predWinners(cl):realWinners(cl);
   let h=`<div class="kmodebar"><div class="seg">
     <button class="${kmode==='pred'?'on':''}" onclick="kmode='pred';renderBracket()">${t('myBracket')}</button>
@@ -653,7 +687,7 @@ function renderBracket(){
     <span class="hint" style="margin:0">${kmode==='pred'?t('hintBracketPred'):t('hintBracketReal')}</span></div>`;
   if(!cl){
     h+=`<p class="hint">${kmode==='pred'?t('missingPred'):t('missingReal')}
-    ${t('missingCount')}<b>${GM.filter(m=>!isScore((kmode==='pred'?state.pred:state.real)[m.id])).length}</b> ${t('matches')}.</p>`;
+    ${t('missingCount')}<b>${GM.filter(m=>!isScore((kmode==='pred'?predEffective():state.real)[m.id])).length}</b> ${t('matches')}.</p>`;
     v.innerHTML=h;return;
   }
   h+=`<div class="bracket">`;
@@ -686,8 +720,9 @@ function koMatchHTML(mid,cl,winners){
     const sel=win===tm;
     if(kmode==='pred'){
       const sc=side===0?psc.h:psc.a;
-      h+=`<div class="kteam ${sel?'sel':win&&!sel?'dim':''}" onclick="pickKO(${mid},'${tm}')" title="${predTie?t('clickPen'):t('clickPick')}">${tlabel(tm)}${sel?'<span class="okko">✔</span>':''}
-        <input class="ksc" id="kp-${mid}-${side}" style="width:34px;background:var(--pred);border:1px solid var(--border);color:var(--txt);border-radius:4px;text-align:center" inputmode="numeric" value="${sc??''}" onclick="event.stopPropagation()" onchange="setPredKOScore(${mid},${side},this)"></div>`;
+      const klk=koStarted(mid);
+      h+=`<div class="kteam ${sel?'sel':win&&!sel?'dim':''}" onclick="pickKO(${mid},'${tm}')" title="${klk?t('locked'):(predTie?t('clickPen'):t('clickPick'))}">${klk?'<span class=lockico>🔒</span> ':''}${tlabel(tm)}${sel?'<span class="okko">✔</span>':''}
+        <input class="ksc" id="kp-${mid}-${side}" style="width:34px;background:var(--pred);border:1px solid var(--border);color:var(--txt);border-radius:4px;text-align:center" inputmode="numeric" value="${sc??''}" ${klk?'disabled':''} onclick="event.stopPropagation()" onchange="setPredKOScore(${mid},${side},this)"></div>`;
     }else{
       const sc=side===0?r.h:r.a;
       const cmp=realHitMarkKO(mid,tm);
@@ -700,17 +735,20 @@ function koMatchHTML(mid,cl,winners){
 function real3rdWinner(cl,winners){const r=state.realKO[103];const[h,a]=koTeams(103,cl,winners);if(!r||!h||!a)return null;
   if(isScore([r.h,r.a])){if(r.h>r.a)return h;if(r.a>r.h)return a;if(r.win===h||r.win===a)return r.win;}return null;}
 function realHitMarkKO(mid,team){ // ✓ si yo también tenía a este equipo ganando esta llave
-  const pc=allGroupsComplete(state.pred)?classify(state.pred):null;if(!pc)return '';
+  const pe=predEffective();
+  const pc=allGroupsComplete(pe)?classify(pe):null;if(!pc)return '';
   const pw=predWinners(pc);
   if(pw[mid]===team)return ` <span class="hit-exact" title="${t('alsoYou')}">✓</span>`;
   return '';
 }
 function pickKO(mid,t){
+  if(koStarted(mid))return; // llave cerrada: el partido ya empezó
   const sc=state.predKOsc[mid];
   if(sc&&isScore([sc.h,sc.a])&&sc.h!==sc.a)return; // con marcador claro, el ganador lo define el marcador
   state.predKO[mid]=state.predKO[mid]===t?null:t;if(!state.predKO[mid])delete state.predKO[mid];save();renderBracket();renderStats();renderGrupos();
 }
 function setPredKOScore(mid,side,inp){
+  if(koStarted(mid)){renderBracket();return;}
   const v=inp.value.trim();const r=state.predKOsc[mid]||{h:null,a:null};
   r[side===0?'h':'a']=v===''?null:Math.max(0,parseInt(v,10)||0);
   if(r.h===null&&r.a===null)delete state.predKOsc[mid];else state.predKOsc[mid]=r;
@@ -748,7 +786,8 @@ function renderStats(){
     <div class="srow"><span>${t('comparable')}</span><b>${ks.comparable}</b></div>
     <div class="srow"><span>${t('outcomeHit')}</span><b>${ks.outcome}</b></div>
     <div class="srow"><span>${t('exactScore')}</span><b>${ks.exact}</b></div></div>`;
-  const pc=allGroupsComplete(state.pred)?classify(state.pred):null;
+  const pe3=predEffective();
+  const pc=allGroupsComplete(pe3)?classify(pe3):null;
   if(pc){
     const pw=predWinners(pc);
     h+=`<div class="scard"><h3>${t('finalPick')}</h3>
@@ -1074,6 +1113,7 @@ function renderChrome(){
   const n=playedCount();
   $('prgFill').style.width=Math.round(100*n/104)+'%';
   $('prgTxt').textContent=t('played',n);
+  $('ddLabel').textContent=t('actions');
   $('btnExp').textContent=t('exp');
   $('btnImp').textContent=t('imp');
   $('btnLang').textContent=LANG==='es'?'🌐 EN':'🌐 ES';
