@@ -197,8 +197,11 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   <section id="view-grupos"></section>
   <section id="view-bracket" style="display:none"></section>
   <section id="view-stats" style="display:none"></section>
-  <footer style="text-align:center;padding:26px 0 14px;color:var(--muted);font-size:12px">
-    <span id="starCta"></span> <a href="https://github.com/JohnCardonaC/worldcup-2026-predictions" target="_blank" rel="noopener" style="color:var(--acc2);font-weight:600">GitHub ⭐</a>
+  <footer style="text-align:center;padding:26px 0 16px;color:var(--muted);font-size:12px;line-height:2">
+    <span id="starCta"></span> <a href="https://github.com/JohnCardonaC/worldcup-2026-predictions" target="_blank" rel="noopener" style="color:var(--acc2);font-weight:600">GitHub ⭐</a><br>
+    <span id="createdBy"></span> <b>John Cardona</b> ·
+    <a href="https://github.com/JohnCardonaC" target="_blank" rel="noopener" style="color:var(--acc2)">@JohnCardonaC</a> ·
+    <a href="mailto:john@dycdigital.com.co" style="color:var(--acc2)">john@dycdigital.com.co</a>
   </footer>
 </main>
 <div id="updlog"></div>
@@ -303,7 +306,7 @@ es:{
  updating:'Actualizando resultados…', srcOf:'Fuente: ', tryFIFA:'Probando FIFA…', tryTSDB:'Probando TheSportsDB…', failTSDB:'TheSportsDB falló: ', notAvail:' no disponible ',
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
- mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
+ mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', createdBy:'Creado por', locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
  cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. El correo no se almacena: solo una huella cifrada que te identifica en cualquier dispositivo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
@@ -338,7 +341,7 @@ en:{
  updating:'Updating results…', srcOf:'Source: ', tryFIFA:'Trying FIFA…', tryTSDB:'Trying TheSportsDB…', failTSDB:'TheSportsDB failed: ', notAvail:' unavailable ',
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
- mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', locked:'Prediction locked: the match already started. Empty counts as 0–0.',
+ mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', createdBy:'Created by', locked:'Prediction locked: the match already started. Empty counts as 0–0.',
  cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is never stored: only an encrypted hash that identifies you on any device.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
@@ -1124,6 +1127,7 @@ function renderChrome(){
   document.documentElement.lang=LANG;
   document.title=LANG==='es'?'Mundial 2026 · Predicciones':'World Cup 2026 · Predictions';
   $('starCta').textContent=t('starCta');
+  $('createdBy').textContent=t('createdBy');
   updateCloudBtn();
 }
 function renderAll(){
