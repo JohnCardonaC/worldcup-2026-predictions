@@ -127,7 +127,10 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .tcard.ko{border-color:#5a4a16}
 /* CLOUD */
 #cloudModal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:200}
-#cloudModal .box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:380px;width:92%}
+#cloudModal .box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:380px;width:89%}
+#clPubWrap{display:none;align-items:center;gap:10px;font-size:13px;color:var(--txt);margin:2px 0 12px;cursor:pointer;background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
+#clPubWrap input{width:17px;height:17px;accent-color:var(--acc);flex:0 0 auto;margin:0}
+#clPubWrap span{flex:1;line-height:1.35;text-align:left}
 #cloudModal h3{margin-bottom:6px}
 #cloudModal p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5}
 #cloudModal input{width:100%;margin-bottom:8px;background:var(--panel2);border:1px solid var(--border);color:var(--txt);border-radius:8px;padding:9px 10px;font-size:14px}
@@ -196,11 +199,12 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
     <p id="clDesc"></p>
     <input id="clEmail" type="email" autocomplete="email" onkeydown="if(event.key==='Enter')cloudSubmit()">
     <input id="clName" maxlength="30" style="display:none" onkeydown="if(event.key==='Enter')cloudSubmit()">
-    <label id="clPubWrap" style="display:none;font-size:13px;color:var(--txt);margin:2px 0 10px;cursor:pointer;align-items:center;gap:8px">
-      <input type="checkbox" id="clPub" checked onchange="cloudPubChanged()"> <span id="clPubTxt"></span>
+    <label id="clPubWrap">
+      <input type="checkbox" id="clPub" checked onchange="cloudPubChanged()"><span id="clPubTxt"></span>
     </label>
     <p id="clErr" style="color:var(--bad);font-size:12px;display:none;margin-bottom:8px"></p>
     <div class="row">
+      <button id="clBack" style="display:none" onclick="cloudOpen(clMandatory)"></button>
       <button id="clOffline" style="display:none" onclick="cloudClose(true)"></button>
       <button onclick="cloudClose()" id="clCancel"></button>
       <button id="clDisc" style="display:none" onclick="cloudSwitch()"></button>
@@ -295,7 +299,7 @@ es:{
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Reintenta más tarde.',
  mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', createdBy:'Creado por', droppedLate:n=>`${n} predicción(es) de partidos que ya habían empezado no se pueden registrar (no son verificables) y contarán como 0–0.`, locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
- cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. Tu correo no aparece en el ranking público; solo el organizador del juego puede verlo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Nombre y apellido (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
+ cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. Tu correo no aparece en el ranking público; solo el organizador del juego puede verlo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Nombre y apellido (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudBack:'← Cambiar correo', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  cloudPubLabel:'Aparecer en el ranking público', rankPrivate:'Estás en modo privado: tu puntaje no aparece en el ranking público.', rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
@@ -330,7 +334,7 @@ en:{
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Try again later.',
  mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', createdBy:'Created by', droppedLate:n=>`${n} prediction(s) for matches that had already kicked off can't be registered (not verifiable) and will count as 0–0.`, locked:'Prediction locked: the match already started. Empty counts as 0–0.',
- cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is not shown in the public ranking; only the game organizer can see it.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'First & last name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
+ cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is not shown in the public ranking; only the game organizer can see it.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'First & last name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudBack:'← Change email', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  cloudPubLabel:'Show me in the public ranking', rankPrivate:"You're in private mode: your score doesn't appear in the public ranking.", rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
 let LANG='es';
@@ -979,6 +983,7 @@ function cloudOpen(mandatory){
   const m=$('cloudModal');m.style.display='flex';
   const conn=!!state.cloudId;
   $('clErr').style.display='none';$('clOffline').style.display='none';
+  $('clBack').style.display='none';$('clBack').textContent=t('cloudBack');
   $('clEmail').placeholder=t('cloudEmailPh');$('clName').placeholder=t('cloudNamePh');
   $('clOffline').textContent=t('cloudOffline');$('clCancel').textContent=t('cloudCancel');
   $('clPubTxt').textContent=t('cloudPubLabel');
@@ -1036,6 +1041,7 @@ async function cloudSubmit(){
       $('clDesc').textContent=t('cloudStep2Desc');
       $('clEmail').style.display='none';$('clName').style.display='';
       $('clPubWrap').style.display='flex';$('clPub').checked=true;
+      $('clBack').style.display='';
       $('clErr').style.display='none';
       const guess=email.split('@')[0].replace(/[._-]+/g,' ').trim();
       if(!$('clName').value)$('clName').value=guess.charAt(0).toUpperCase()+guess.slice(1,29);
