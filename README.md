@@ -24,7 +24,6 @@ A single HTML file. No installation, no account, no server. Your data never leav
 - **Cloud save & global ranking (☁️)** — sign in with just your email (no password): your predictions sync across devices and you compete in a live ranking. Name asked only the first time.
 - **Bilingual** — switch Spanish / English anytime (🌐 button).
 - **Light & dark mode** — follows your system, or toggle it (☀️/🌙 button).
-- **Backup** — export / import all your predictions as a JSON file.
 
 ## 🚀 How to use it
 
@@ -71,7 +70,7 @@ Honest note: there is no authentication. Anyone who knows which email you used c
 
 ## 🔒 Privacy
 
-Everything is stored in your browser's `localStorage` and synced to the game's database: your email (visible only to the organizer, never in the public ranking), your display name and your predictions. No tracking beyond that. Use **Export** to back up your predictions and **Import** to restore them.
+Everything is stored in your browser's `localStorage` and synced to the game's database: your email (visible only to the organizer, never in the public ranking), your display name and your predictions. No tracking beyond that. The cloud is your backup: sign in with your email from any device.
 
 ## ⚠️ Limitations
 

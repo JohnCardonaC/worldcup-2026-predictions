@@ -24,7 +24,6 @@ Un solo archivo HTML. Sin instalación, sin cuenta, sin servidor. Tus datos nunc
 - **Guardado en la nube y ranking global (☁️)** — entras solo con tu correo (sin contraseña): tus predicciones se sincronizan entre dispositivos y compites en un ranking en vivo. El nombre se pide solo la primera vez.
 - **Bilingüe** — cambia entre español e inglés cuando quieras (botón 🌐).
 - **Modo claro y oscuro** — sigue tu sistema, o cámbialo con el botón ☀️/🌙.
-- **Respaldo** — exporta / importa todas tus predicciones como archivo JSON.
 
 ## 🚀 Cómo usarla
 
@@ -71,7 +70,7 @@ Nota honesta: no hay autenticación. Cualquiera que sepa qué correo usaste podr
 
 ## 🔒 Privacidad
 
-Todo se guarda en el `localStorage` de tu navegador y se sincroniza con la base del juego: tu correo (visible solo para el organizador, nunca en el ranking público), tu nombre elegido y tus predicciones. Sin más rastreo que eso. Usa **Exportar** para respaldar tus predicciones e **Importar** para restaurarlas.
+Todo se guarda en el `localStorage` de tu navegador y se sincroniza con la base del juego: tu correo (visible solo para el organizador, nunca en el ranking público), tu nombre elegido y tus predicciones. Sin más rastreo que eso. Tu respaldo es la nube misma: entra con tu correo desde cualquier dispositivo.
 
 ## ⚠️ Limitaciones
 

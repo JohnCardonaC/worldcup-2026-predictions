@@ -125,14 +125,6 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .tcard .duel .mid b{color:var(--txt);font-size:20px}
 .tcard .foot{margin-top:8px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
 .tcard.ko{border-color:#5a4a16}
-.dd{position:relative;display:inline-block}
-.dd summary{list-style:none;cursor:pointer;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;font-size:13px}
-.dd summary::-webkit-details-marker{display:none}
-.dd summary:hover{border-color:var(--acc2)}
-.dd[open] summary{border-color:var(--acc2)}
-.ddmenu{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:160px;z-index:120;box-shadow:0 10px 28px rgba(0,0,0,.35)}
-.ddmenu button{text-align:left;border:none;background:transparent;width:100%}
-.ddmenu button:hover{background:var(--panel2);transform:none}
 /* CLOUD */
 #cloudModal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:200}
 #cloudModal .box{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:380px;width:92%}
@@ -177,14 +169,6 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
     <button id="btnCloud" onclick="cloudOpen()" style="display:none">☁️</button>
     <button class="icon" id="btnTheme" onclick="toggleTheme()" title="Modo claro / oscuro · Light / dark mode">☀️</button>
     <button class="icon" id="btnLang" onclick="toggleLang()" title="Cambiar idioma / Switch language">🌐 EN</button>
-    <details class="dd" id="ddActions">
-      <summary id="ddLabel">⚙️ Acciones ▾</summary>
-      <div class="ddmenu">
-        <button id="btnExp" onclick="exportar();document.getElementById('ddActions').open=false">Exportar</button>
-        <button id="btnImp" onclick="document.getElementById('impfile').click();document.getElementById('ddActions').open=false">Importar</button>
-      </div>
-    </details>
-    <input type="file" id="impfile" accept=".json" style="display:none" onchange="importar(this)">
   </div>
   <span id="lastUpd"></span>
 </header>
@@ -281,7 +265,7 @@ const TEAMS={
 const I18N={
 es:{
  title:'MUNDIAL MÉXICO <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
- exp:'Exportar', imp:'Importar', lastUpd:'Últ. actualización: ',
+ lastUpd:'Últ. actualización: ',
  tabGroups:'Fase de grupos', tabBracket:'Eliminatorias', tabStats:'Mis aciertos',
  hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) y es de solo lectura. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
  autoUpdated:n=>`⚽ ${n} resultado(s) nuevos cargados automáticamente`, autoNote:' · auto cada 3 h', starCta:'¿Te gusta el juego? Dale una ⭐ en',
@@ -309,14 +293,14 @@ es:{
  finalPick:'Tu pronóstico final', champion:'Campeón', finalists:'Finalistas', thirdsQ:'Terceros que clasifican',
  updating:'Actualizando resultados…', srcOf:'Fuente: ', tryFIFA:'Probando FIFA…', tryTSDB:'Probando TheSportsDB…', failTSDB:'TheSportsDB falló: ', notAvail:' no disponible ',
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
- noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
- mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', actions:'⚙️ Acciones ▾', createdBy:'Creado por', droppedLate:n=>`${n} predicción(es) de partidos que ya habían empezado no se pueden registrar (no son verificables) y contarán como 0–0.`, locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
+ noSource:'No se pudo obtener datos de ninguna fuente. Reintenta más tarde.',
+ mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste', createdBy:'Creado por', droppedLate:n=>`${n} predicción(es) de partidos que ya habían empezado no se pueden registrar (no son verificables) y contarán como 0–0.`, locked:'Predicción cerrada: el partido ya empezó. Vacía cuenta como 0–0.',
  cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. Tu correo no aparece en el ranking público; solo el organizador del juego puede verlo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Nombre y apellido (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  cloudPubLabel:'Aparecer en el ranking público', rankPrivate:'Estás en modo privado: tu puntaje no aparece en el ranking público.', rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
  title:'WORLD CUP MEXICO <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
- exp:'Export', imp:'Import', lastUpd:'Last update: ',
+ lastUpd:'Last update: ',
  tabGroups:'Group stage', tabBracket:'Knockout', tabStats:'My accuracy',
  hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) and is read-only. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
  autoUpdated:n=>`⚽ ${n} new result(s) loaded automatically`, autoNote:' · auto every 3 h', starCta:'Enjoying the game? Star it on',
@@ -344,8 +328,8 @@ en:{
  finalPick:'Your final pick', champion:'Champion', finalists:'Finalists', thirdsQ:'Qualifying thirds',
  updating:'Updating results…', srcOf:'Source: ', tryFIFA:'Trying FIFA…', tryTSDB:'Trying TheSportsDB…', failTSDB:'TheSportsDB failed: ', notAvail:' unavailable ',
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
- noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
- mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', actions:'⚙️ Actions ▾', createdBy:'Created by', droppedLate:n=>`${n} prediction(s) for matches that had already kicked off can't be registered (not verifiable) and will count as 0–0.`, locked:'Prediction locked: the match already started. Empty counts as 0–0.',
+ noSource:'Could not fetch data from any source. Try again later.',
+ mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed', createdBy:'Created by', droppedLate:n=>`${n} prediction(s) for matches that had already kicked off can't be registered (not verifiable) and will count as 0–0.`, locked:'Prediction locked: the match already started. Empty counts as 0–0.',
  cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is not shown in the public ranking; only the game organizer can see it.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'First & last name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  cloudPubLabel:'Show me in the public ranking', rankPrivate:"You're in private mode: your score doesn't appear in the public ranking.", rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
@@ -1112,17 +1096,6 @@ function renderRanking(){
   box.innerHTML=h+'</table>';
 }
 /* ============ EXPORT / IMPORT / TABS ============ */
-function exportar(){
-  const blob=new Blob([JSON.stringify(state,null,1)],{type:'application/json'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='mundial2026-predicciones.json';a.click();
-}
-function importar(inp){
-  const f=inp.files[0];if(!f)return;
-  const rd=new FileReader();
-  rd.onload=()=>{try{state=Object.assign({pred:{},predKO:{},predKOsc:{},real:{},realKO:{},lastUpd:null,lang:LANG},JSON.parse(rd.result));LANG=(state.lang==='en')?'en':'es';save();renderAll();}catch(e){alert(t('invalidFile'));}};
-  rd.readAsText(f);inp.value='';
-}
 let tab='grupos';
 function setTab(tb){tab=tb;['grupos','bracket','stats'].forEach(x=>{$('view-'+x).style.display=x===tb?'':'none';$('tab-'+x).classList.toggle('on',x===tb);});
   if(tb==='stats'&&cloudOn()&&!RANK)loadRanking();}
@@ -1137,9 +1110,6 @@ function renderChrome(){
   const n=playedCount();
   $('prgFill').style.width=Math.round(100*n/104)+'%';
   $('prgTxt').textContent=t('played',n);
-  $('ddLabel').textContent=t('actions');
-  $('btnExp').textContent=t('exp');
-  $('btnImp').textContent=t('imp');
   $('btnLang').textContent=LANG==='es'?'🌐 EN':'🌐 ES';
   $('btnTheme').textContent=curTheme()==='light'?'🌙':'☀️';
   $('tab-grupos').textContent=t('tabGroups');
