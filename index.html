@@ -111,7 +111,7 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 /* HOY */
 .todaywrap{margin-bottom:20px;text-align:center}
 .todaywrap h2{font-size:15px;margin-bottom:2px}
-.todaywrap .tz{font-size:11px;color:var(--muted);margin-bottom:10px}
+.todaywrap .tz{font-size:14px;color:var(--txt);opacity:.85;font-weight:500;margin-bottom:12px}
 .todaycards{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
 .tcard{background:linear-gradient(160deg,var(--tcard1),var(--tcard2));border:1px solid var(--tcardb);border-radius:12px;padding:14px;width:310px;max-width:100%;text-align:left}
 .tcard .when{display:flex;align-items:baseline;gap:8px}
@@ -566,7 +566,7 @@ function totalPoints(){
 /* ============ RENDER: HOY ============ */
 const $=id=>document.getElementById(id);
 function localDayKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function hora(ts){return new Date(ts).toLocaleTimeString(t('locale'),{hour:'2-digit',minute:'2-digit'});}
+function hora(ts){return new Date(ts).toLocaleTimeString(t('locale'),{hour:'numeric',minute:'2-digit',hour12:true});}
 // Todos los partidos con horario (grupos + eliminatorias), con equipos resueltos si se conocen
 function allScheduled(){
   const out=GM.map(m=>({id:m.id,ts:m.ts,v:m.v,h:m.h,a:m.a,ko:false,label:t('group')+' '+m.g,
@@ -1129,7 +1129,7 @@ function renderChrome(){
 }
 function renderAll(){
   renderChrome();renderGrupos();renderBracket();renderStats();
-  $('lastUpd').textContent=state.lastUpd?(t('lastUpd')+new Date(state.lastUpd).toLocaleString(t('locale'))+t('autoNote')):'';
+  $('lastUpd').textContent=state.lastUpd?(t('lastUpd')+new Date(state.lastUpd).toLocaleString(t('locale'),{dateStyle:'short',timeStyle:'short',hour12:true})+t('autoNote')):'';
 }
 /* ============ INIT ============ */
 if(typeof window!=='undefined'&&typeof document!=='undefined'&&document.getElementById('view-grupos')){
