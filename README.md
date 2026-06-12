@@ -63,7 +63,7 @@ open index.html   # macOS — or just double-click it
 
 ## ☁️ Cloud save & ranking
 
-Click the **☁️ button**, enter your email and a display name. No password, no verification — your predictions are saved automatically and you appear in the player ranking ("My accuracy" tab). Connect the same email on another device to continue there.
+When you open the game it asks for your **email** (no password, no verification): if it's your first time it also asks for a display name; if you're already registered it logs you straight in, and if your session is already open it asks nothing. Your predictions save automatically and you appear in the player ranking ("My accuracy" tab). Use the same email on another device to continue there, or the ☁️ button to sync/switch account.
 
 How it works: your email is **never stored** — the app computes a hash locally and uses it as your ID. The backend is a tiny AWS Lambda + DynamoDB service (see [`aws/deploy.sh`](aws/deploy.sh) if you want to self-host it: run the script and paste the printed URL into `CLOUD_URL` in `index.html`).
 

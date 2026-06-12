@@ -190,14 +190,14 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   <div class="box">
     <h3 id="clTitle"></h3>
     <p id="clDesc"></p>
-    <div id="clForm">
-      <input id="clEmail" type="email" autocomplete="email">
-      <input id="clName" maxlength="30">
-    </div>
+    <input id="clEmail" type="email" autocomplete="email" onkeydown="if(event.key==='Enter')cloudSubmit()">
+    <input id="clName" maxlength="30" style="display:none" onkeydown="if(event.key==='Enter')cloudSubmit()">
+    <p id="clErr" style="color:var(--bad);font-size:12px;display:none;margin-bottom:8px"></p>
     <div class="row">
+      <button id="clOffline" style="display:none" onclick="cloudClose(true)"></button>
       <button onclick="cloudClose()" id="clCancel"></button>
-      <button id="clDisc" style="display:none" onclick="cloudDisconnect()"></button>
-      <button class="primary" id="clGo" onclick="cloudConnect()"></button>
+      <button id="clDisc" style="display:none" onclick="cloudSwitch()"></button>
+      <button class="primary" id="clGo" onclick="cloudSubmit()"></button>
     </div>
   </div>
 </div>
@@ -288,7 +288,7 @@ es:{
  applied:n=>`${n} resultado(s) nuevos aplicados.`, noNew:'Sin resultados nuevos (las fuentes gratuitas pueden tardar horas en actualizar; puedes cargar un marcador a mano).',
  noSource:'No se pudo obtener datos de ninguna fuente. Carga los marcadores a mano en la columna verde.', invalidFile:'Archivo inválido',
  mdShort:d=>`${d} jun`, locale:'es', missed:'Fallaste',
- cloudBtn:'☁️ Nube', cloudTitle:'Guardar en la nube', cloudDesc:'Escribe tu correo y un nombre para el ranking. Sin contraseña. Tu correo no se almacena: solo una huella (hash) que identifica tus predicciones en cualquier dispositivo.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudConnectBtn:'Conectar', cloudCancel:'Cancelar', cloudDisc:'Desconectar', cloudAsTitle:'Nube conectada', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde conectes el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
+ cloudBtn:'☁️ Nube', cloudTitle:'⚽ Tu correo para jugar', cloudStep1Desc:'Tus predicciones se guardan con tu correo y compites en el ranking. Sin contraseña. El correo no se almacena: solo una huella cifrada que te identifica en cualquier dispositivo.', cloudStep2Title:'¡Primera vez! ¿Cómo te llamas?', cloudStep2Desc:'Este nombre aparecerá en el ranking de jugadores.', cloudEmailPh:'tu@correo.com', cloudNamePh:'Tu nombre (visible en el ranking)', cloudContinue:'Continuar', cloudCreate:'Crear y jugar', cloudCancel:'Cancelar', cloudSwitch:'Cambiar de cuenta', cloudOffline:'Continuar sin guardar', cloudNetErr:'Sin conexión con el servidor. Reintenta, o continúa sin guardar (te lo pedirá de nuevo al recargar).', cloudAsTitle:'Sesión activa', cloudAsDesc:n=>`Guardando como <b>${n}</b>. Tus predicciones se sincronizan solas en este y otros dispositivos donde uses el mismo correo.`, cloudSyncNow:'Sincronizar ahora', cloudSaving:'⟳ guardando…', cloudOk:'✓ guardado', cloudErr:'⚠ sin conexión', cloudBadEmail:'Correo inválido', cloudNeedName:'Pon un nombre para el ranking', cloudConflict:(r,l)=>`Hay predicciones guardadas en la nube (${r} partidos de grupos) y este dispositivo tiene ${l}.\n\nOK = cargar las de la nube\nCancelar = conservar las de este dispositivo y sobreescribir la nube`,
  rankTitle:'🌍 Ranking de jugadores', rankRefresh:'⟳ Actualizar ranking', rankPlayer:'Jugador', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'Aún no hay jugadores en el ranking.', rankLoading:'Cargando…', rankOff:'Conéctate a la nube (botón ☁️) para aparecer en el ranking.',
 },
 en:{
@@ -323,7 +323,7 @@ en:{
  applied:n=>`${n} new result(s) applied.`, noNew:'No new results (free sources can lag by hours; you can enter scores manually).',
  noSource:'Could not fetch data from any source. Enter scores manually in the green column.', invalidFile:'Invalid file',
  mdShort:d=>`Jun ${d}`, locale:'en', missed:'Missed',
- cloudBtn:'☁️ Cloud', cloudTitle:'Save to the cloud', cloudDesc:'Enter your email and a display name for the ranking. No password. Your email is never stored: only a hash that identifies your predictions on any device.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudConnectBtn:'Connect', cloudCancel:'Cancel', cloudDisc:'Disconnect', cloudAsTitle:'Cloud connected', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you connect the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
+ cloudBtn:'☁️ Cloud', cloudTitle:'⚽ Your email to play', cloudStep1Desc:'Your predictions are saved with your email and you compete in the ranking. No password. Your email is never stored: only an encrypted hash that identifies you on any device.', cloudStep2Title:'First time! What\'s your name?', cloudStep2Desc:'This name will appear in the player ranking.', cloudEmailPh:'you@email.com', cloudNamePh:'Your name (shown in ranking)', cloudContinue:'Continue', cloudCreate:'Create & play', cloudCancel:'Cancel', cloudSwitch:'Switch account', cloudOffline:'Continue without saving', cloudNetErr:'Can\'t reach the server. Retry, or continue without saving (you\'ll be asked again on reload).', cloudAsTitle:'Session active', cloudAsDesc:n=>`Saving as <b>${n}</b>. Your predictions sync automatically on this and any device where you use the same email.`, cloudSyncNow:'Sync now', cloudSaving:'⟳ saving…', cloudOk:'✓ saved', cloudErr:'⚠ offline', cloudBadEmail:'Invalid email', cloudNeedName:'Enter a name for the ranking', cloudConflict:(r,l)=>`Found predictions saved in the cloud (${r} group matches) while this device has ${l}.\n\nOK = load the cloud version\nCancel = keep this device's and overwrite the cloud`,
  rankTitle:'🌍 Player ranking', rankRefresh:'⟳ Refresh ranking', rankPlayer:'Player', rankPts:'Pts', rankPreds:'Pred.', rankEmpty:'No players in the ranking yet.', rankLoading:'Loading…', rankOff:'Connect to the cloud (☁️ button) to appear in the ranking.',
 }};
 let LANG='es';
@@ -949,39 +949,86 @@ function updateCloudBtn(){
   b.style.display='';
   b.innerHTML=state.cloudId?`☁️ ${state.cloudName} <span id="cloudStatus">${t(cloudStatus==='saving'?'cloudSaving':cloudStatus==='err'?'cloudErr':'cloudOk')}</span>`:t('cloudBtn');
 }
-function cloudOpen(){
+// Flujo: paso 'email' (siempre) → si el correo ya existe, entra directo con su nombre;
+// si es nuevo, paso 'name'. Obligatorio al abrir la app (clMandatory) salvo fallo de red.
+let clStep='email',clPendingId=null,clMandatory=false;
+function cloudOpen(mandatory){
+  clMandatory=!!mandatory;clStep='email';clPendingId=null;
   const m=$('cloudModal');m.style.display='flex';
   const conn=!!state.cloudId;
-  $('clTitle').textContent=conn?t('cloudAsTitle'):t('cloudTitle');
-  $('clDesc').innerHTML=conn?t('cloudAsDesc',state.cloudName):t('cloudDesc');
-  $('clForm').style.display=conn?'none':'';
+  $('clErr').style.display='none';$('clOffline').style.display='none';
   $('clEmail').placeholder=t('cloudEmailPh');$('clName').placeholder=t('cloudNamePh');
-  $('clCancel').textContent=t('cloudCancel');
-  $('clDisc').style.display=conn?'':'none';$('clDisc').textContent=t('cloudDisc');
-  $('clGo').textContent=conn?t('cloudSyncNow'):t('cloudConnectBtn');
-}
-function cloudClose(){$('cloudModal').style.display='none';}
-async function cloudConnect(){
-  if(state.cloudId){cloudPush();cloudClose();return;} // ya conectado → sync manual
-  const email=$('clEmail').value.trim(),name=$('clName').value.trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert(t('cloudBadEmail'));return;}
-  if(!name){alert(t('cloudNeedName'));return;}
-  const id=await hashId(email);
-  let remote=null;
-  try{
-    const r=await fetch(CLOUD_URL+'player/'+id,{signal:AbortSignal.timeout(10000)});
-    if(r.ok)remote=(await r.json()).item;
-  }catch(e){}
-  const localCount=GM.filter(m=>isScore(state.pred[m.id])).length;
-  if(remote&&remote.state&&remote.pred_count>0&&confirm(t('cloudConflict',remote.pred_count,localCount))){
-    const s=remote.state;
-    state.pred=s.pred||{};state.predKO=s.predKO||{};state.predKOsc=s.predKOsc||{};
-    state.real=Object.assign(s.real||{},state.real);state.realKO=Object.assign(s.realKO||{},state.realKO);
+  $('clOffline').textContent=t('cloudOffline');$('clCancel').textContent=t('cloudCancel');
+  if(conn){
+    $('clTitle').textContent=t('cloudAsTitle');
+    $('clDesc').innerHTML=t('cloudAsDesc',state.cloudName);
+    $('clEmail').style.display='none';$('clName').style.display='none';
+    $('clCancel').style.display='';
+    $('clDisc').style.display='';$('clDisc').textContent=t('cloudSwitch');
+    $('clGo').textContent=t('cloudSyncNow');
+  }else{
+    $('clTitle').textContent=t('cloudTitle');
+    $('clDesc').textContent=t('cloudStep1Desc');
+    $('clEmail').style.display='';$('clName').style.display='none';
+    $('clCancel').style.display=clMandatory?'none':'';
+    $('clDisc').style.display='none';
+    $('clGo').textContent=t('cloudContinue');
+    setTimeout(()=>$('clEmail').focus(),50);
   }
-  state.cloudId=id;state.cloudName=name.slice(0,30);
-  save();cloudClose();renderAll();cloudPush();
 }
-function cloudDisconnect(){delete state.cloudId;delete state.cloudName;save();cloudClose();updateCloudBtn();renderStats();}
+function cloudClose(force){
+  if(clMandatory&&!state.cloudId&&!force)return; // obligatorio: no se cierra sin sesión
+  $('cloudModal').style.display='none';
+}
+async function cloudSubmit(){
+  if(state.cloudId){cloudPush();cloudClose();return;} // sesión activa → sync manual
+  const go=$('clGo');
+  if(clStep==='email'){
+    const email=$('clEmail').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showClErr(t('cloudBadEmail'));return;}
+    go.disabled=true;
+    const id=await hashId(email);
+    let remote=null,netOk=true;
+    try{
+      const r=await fetch(CLOUD_URL+'player/'+id,{signal:AbortSignal.timeout(10000)});
+      if(!r.ok)throw new Error('http '+r.status);
+      remote=(await r.json()).item;
+    }catch(e){netOk=false;}
+    go.disabled=false;
+    if(!netOk){showClErr(t('cloudNetErr'));$('clOffline').style.display='';return;}
+    if(remote&&remote.name){ // registrado: entra directo con su nombre
+      const localCount=GM.filter(m=>isScore(state.pred[m.id])).length;
+      if(remote.state&&remote.pred_count>0&&localCount>0){
+        if(confirm(t('cloudConflict',remote.pred_count,localCount)))applyRemoteState(remote.state);
+      }else if(remote.state&&remote.pred_count>0){
+        applyRemoteState(remote.state);
+      }
+      state.cloudId=id;state.cloudName=remote.name;
+      save();clMandatory=false;cloudClose(true);renderAll();cloudPush();RANK=null;
+    }else{ // primera vez: pedir nombre
+      clPendingId=id;clStep='name';
+      $('clTitle').textContent=t('cloudStep2Title');
+      $('clDesc').textContent=t('cloudStep2Desc');
+      $('clEmail').style.display='none';$('clName').style.display='';
+      $('clErr').style.display='none';
+      const guess=email.split('@')[0].replace(/[._-]+/g,' ').trim();
+      if(!$('clName').value)$('clName').value=guess.charAt(0).toUpperCase()+guess.slice(1,29);
+      $('clGo').textContent=t('cloudCreate');
+      setTimeout(()=>{$('clName').focus();$('clName').select();},50);
+    }
+  }else{ // paso nombre
+    const name=$('clName').value.trim();
+    if(!name){showClErr(t('cloudNeedName'));return;}
+    state.cloudId=clPendingId;state.cloudName=name.slice(0,30);
+    save();clMandatory=false;cloudClose(true);renderAll();cloudPush();RANK=null;
+  }
+}
+function showClErr(msg){const e=$('clErr');e.textContent=msg;e.style.display='';}
+function applyRemoteState(s){
+  state.pred=s.pred||{};state.predKO=s.predKO||{};state.predKOsc=s.predKOsc||{};
+  state.real=Object.assign(s.real||{},state.real);state.realKO=Object.assign(s.realKO||{},state.realKO);
+}
+function cloudSwitch(){delete state.cloudId;delete state.cloudName;save();updateCloudBtn();renderStats();cloudOpen(true);}
 async function loadRanking(){
   const box=$('rankBox');if(!box)return;
   box.innerHTML=`<span class="hint">${t('rankLoading')}</span>`;
@@ -1046,6 +1093,7 @@ function renderAll(){
 /* ============ INIT ============ */
 if(typeof window!=='undefined'&&typeof document!=='undefined'&&document.getElementById('view-grupos')){
   load();renderAll();
+  if(cloudOn()&&!state.cloudId)cloudOpen(true); // registro obligatorio al entrar (correo; nombre solo la 1ª vez)
   maybeAutoUpdate();
   setInterval(maybeAutoUpdate,15*60*1000); // revisa cada 15 min si ya tocan las 3 h (robusto ante laptops dormidas)
 }

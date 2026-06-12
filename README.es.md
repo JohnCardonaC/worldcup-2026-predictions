@@ -63,7 +63,7 @@ open index.html   # macOS — o simplemente doble clic
 
 ## ☁️ Guardado en la nube y ranking
 
-Haz clic en el **botón ☁️**, escribe tu correo y un nombre. Sin contraseña ni verificación — tus predicciones se guardan solas y apareces en el ranking de jugadores (pestaña "Mis aciertos"). Conecta el mismo correo en otro dispositivo para continuar ahí.
+Al abrir el juego te pide tu **correo** (sin contraseña ni verificación): si es tu primera vez también te pide un nombre; si ya estás registrado entras directo, y si tu sesión ya está abierta no te pide nada. Tus predicciones se guardan solas y apareces en el ranking de jugadores (pestaña "Mis aciertos"). Usa el mismo correo en otro dispositivo para continuar ahí, o el botón ☁️ para sincronizar/cambiar de cuenta.
 
 Cómo funciona: tu correo **nunca se almacena** — la app calcula una huella (hash) localmente y la usa como tu identificador. El backend es un servicio mínimo en AWS Lambda + DynamoDB (mira [`aws/deploy.sh`](aws/deploy.sh) si quieres montar el tuyo: corre el script y pega la URL que imprime en `CLOUD_URL` dentro de `index.html`).
 
