@@ -165,7 +165,6 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
     <button id="btnCloud" onclick="cloudOpen()" style="display:none">☁️</button>
     <button class="icon" id="btnTheme" onclick="toggleTheme()" title="Modo claro / oscuro · Light / dark mode">☀️</button>
     <button class="icon" id="btnLang" onclick="toggleLang()" title="Cambiar idioma / Switch language">🌐 EN</button>
-    <button class="primary" id="btnUpd" onclick="actualizarResultados()">⟳ Actualizar resultados reales</button>
     <button id="btnExp" onclick="exportar()">Exportar</button>
     <button id="btnImp" onclick="document.getElementById('impfile').click()">Importar</button>
     <input type="file" id="impfile" accept=".json" style="display:none" onchange="importar(this)">
@@ -182,6 +181,9 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   <section id="view-grupos"></section>
   <section id="view-bracket" style="display:none"></section>
   <section id="view-stats" style="display:none"></section>
+  <footer style="text-align:center;padding:26px 0 14px;color:var(--muted);font-size:12px">
+    <span id="starCta"></span> <a href="https://github.com/JohnCardonaC/worldcup-2026-predictions" target="_blank" rel="noopener" style="color:var(--acc2);font-weight:600">GitHub ⭐</a>
+  </footer>
 </main>
 <div id="updlog"></div>
 <div id="cloudModal" onclick="if(event.target===this)cloudClose()">
@@ -258,7 +260,8 @@ es:{
  title:'MUNDIAL <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
  exp:'Exportar', imp:'Importar', lastUpd:'Últ. actualización: ',
  tabGroups:'Fase de grupos', tabBracket:'Eliminatorias', tabStats:'Mis aciertos',
- hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: se llena con el botón <b>⟳ Actualizar</b> o a mano si lo prefieres. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo.',
+ hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) o a mano si lo prefieres. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo.',
+ autoUpdated:n=>`⚽ ${n} resultado(s) nuevos cargados automáticamente`, autoNote:' · auto cada 3 h', starCta:'¿Te gusta el juego? Dale una ⭐ en',
  group:'Grupo', pillReal:'tabla real', pillPred:'tabla según tu predicción',
  thTeam:'Equipo', thMatch:'Partido', thPred:'Mi pred.', thReal:'Real',
  todayTitle:'⚽ Partidos de hoy', nextTitle:'⚽ Próximos partidos · ', tz:'Horarios en tu zona: ',
@@ -292,7 +295,8 @@ en:{
  title:'WORLD CUP <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
  exp:'Export', imp:'Import', lastUpd:'Last update: ',
  tabGroups:'Group stage', tabBracket:'Knockout', tabStats:'My accuracy',
- hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: filled by the <b>⟳ Update</b> button or manually. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss.',
+ hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) or manually if you prefer. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss.',
+ autoUpdated:n=>`⚽ ${n} new result(s) loaded automatically`, autoNote:' · auto every 3 h', starCta:'Enjoying the game? Star it on',
  group:'Group', pillReal:'real table', pillPred:'table per your prediction',
  thTeam:'Team', thMatch:'Match', thPred:'My pred.', thReal:'Real',
  todayTitle:'⚽ Today\'s matches', nextTitle:'⚽ Upcoming matches · ', tz:'Times in your timezone: ',
@@ -765,30 +769,38 @@ const ALIAS=(()=>{const m={};for(const id in TEAMS){m[norm(id)]=id;m[norm(TEAMS[
 function teamFromName(name){return ALIAS[norm(name)]||null;}
 function logBox(){const b=$('updlog');b.style.display='block';return b;}
 function logLine(txt,cls){logBox().insertAdjacentHTML('beforeend',`<div class="lg ${cls||''}">${txt}</div>`);}
-async function actualizarResultados(){
-  const btn=$('btnUpd');btn.disabled=true;
-  const b=logBox();b.innerHTML=`<span class="x" onclick="this.parentElement.style.display='none'">✕</span><h4>${t('updating')}</h4>`;
+let updRunning=false;
+async function actualizarResultados(auto){
+  if(updRunning)return;updRunning=true;
+  if(!auto){const b=logBox();b.innerHTML=`<span class="x" onclick="this.parentElement.style.display='none'">✕</span><h4>${t('updating')}</h4>`;}
   let changes=0;
   try{
     let results=null;
-    try{results=await fromFixtureDownload();logLine(t('srcOf')+'fixturedownload.com','ok');}
-    catch(e){logLine('fixturedownload'+t('notAvail')+'('+e.message+'). '+t('tryFIFA'));}
+    try{results=await fromFixtureDownload();if(!auto)logLine(t('srcOf')+'fixturedownload.com','ok');}
+    catch(e){if(!auto)logLine('fixturedownload'+t('notAvail')+'('+e.message+'). '+t('tryFIFA'));}
     if(!results){
-      try{results=await fromFIFA();logLine(t('srcOf')+'api.fifa.com','ok');}
-      catch(e){logLine('FIFA API'+t('notAvail')+'('+e.message+'). '+t('tryTSDB'));}
+      try{results=await fromFIFA();if(!auto)logLine(t('srcOf')+'api.fifa.com','ok');}
+      catch(e){if(!auto)logLine('FIFA API'+t('notAvail')+'('+e.message+'). '+t('tryTSDB'));}
     }
     if(!results){
-      try{results=await fromTSDB();logLine(t('srcOf')+'TheSportsDB','ok');}
-      catch(e){logLine(t('failTSDB')+e.message,'err');}
+      try{results=await fromTSDB();if(!auto)logLine(t('srcOf')+'TheSportsDB','ok');}
+      catch(e){if(!auto)logLine(t('failTSDB')+e.message,'err');}
     }
     if(results){
       changes=applyResults(results);
-      logLine(changes?t('applied',changes):t('noNew'));
+      if(!auto)logLine(changes?t('applied',changes):t('noNew'));
+      if(auto&&changes){const b=logBox();b.innerHTML=`<span class="x" onclick="this.parentElement.style.display='none'">✕</span><h4>${t('autoUpdated',changes)}</h4>`;setTimeout(()=>{b.style.display='none';},8000);}
       state.lastUpd=new Date().toISOString();save();renderAll();
-    }else{
+    }else if(!auto){
       logLine(t('noSource'),'err');
     }
-  }finally{btn.disabled=false;}
+  }finally{updRunning=false;}
+}
+// Actualización automática: al abrir (si pasaron >3 h) y periódicamente mientras la página esté abierta
+const UPD_MS=3*3600*1000;
+function maybeAutoUpdate(){
+  const last=state.lastUpd?new Date(state.lastUpd).getTime():0;
+  if(Date.now()-last>UPD_MS)actualizarResultados(true);
 }
 // --- fixturedownload.com (calendario FIFA completo con resultados) ---
 async function fromFixtureDownload(){
@@ -1015,7 +1027,6 @@ function renderChrome(){
   const n=playedCount();
   $('prgFill').style.width=Math.round(100*n/104)+'%';
   $('prgTxt').textContent=t('played',n);
-  $('btnUpd').textContent=t('updBtn');
   $('btnExp').textContent=t('exp');
   $('btnImp').textContent=t('imp');
   $('btnLang').textContent=LANG==='es'?'🌐 EN':'🌐 ES';
@@ -1025,15 +1036,18 @@ function renderChrome(){
   $('tab-stats').textContent=t('tabStats');
   document.documentElement.lang=LANG;
   document.title=LANG==='es'?'Mundial 2026 · Predicciones':'World Cup 2026 · Predictions';
+  $('starCta').textContent=t('starCta');
   updateCloudBtn();
 }
 function renderAll(){
   renderChrome();renderGrupos();renderBracket();renderStats();
-  $('lastUpd').textContent=state.lastUpd?(t('lastUpd')+new Date(state.lastUpd).toLocaleString(t('locale'))):'';
+  $('lastUpd').textContent=state.lastUpd?(t('lastUpd')+new Date(state.lastUpd).toLocaleString(t('locale'))+t('autoNote')):'';
 }
 /* ============ INIT ============ */
 if(typeof window!=='undefined'&&typeof document!=='undefined'&&document.getElementById('view-grupos')){
   load();renderAll();
+  maybeAutoUpdate();
+  setInterval(maybeAutoUpdate,15*60*1000); // revisa cada 15 min si ya tocan las 3 h (robusto ante laptops dormidas)
 }
 </script>
 </body>
