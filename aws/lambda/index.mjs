@@ -39,9 +39,17 @@ function freezeState(next, prevItem, now) {
   return next;
 }
 
+// CORS lo maneja la Lambda: con una ruta $default, API Gateway NO responde
+// los preflight OPTIONS automáticamente — llegan aquí.
+const CORS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET,PUT,OPTIONS",
+  "access-control-allow-headers": "content-type",
+  "access-control-max-age": "86400",
+};
 const res = (code, body) => ({
   statusCode: code,
-  headers: { "content-type": "application/json" },
+  headers: { "content-type": "application/json", ...CORS },
   body: JSON.stringify(body),
 });
 
@@ -49,6 +57,7 @@ export const handler = async (event) => {
   // Soporta Function URL / API Gateway HTTP API (payload 2.0) y payload 1.0
   const method = event.requestContext?.http?.method || event.httpMethod || "GET";
   const path = event.rawPath || event.path || "/";
+  if (method === "OPTIONS") return { statusCode: 204, headers: CORS, body: "" };
   try {
     if (method === "GET" && path.startsWith("/player/")) {
       const id = decodeURIComponent(path.slice("/player/".length)).slice(0, 80);
