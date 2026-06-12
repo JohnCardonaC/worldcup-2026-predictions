@@ -18,7 +18,7 @@ A single HTML file. No installation, no account, no server. Your data never leav
 - **All 104 real matches** — the official draw, schedule and venues (groups A–L, Jun 11 – Jul 19, 2026).
 - **Group stage predictions** — enter your score for the 72 group matches; standings are computed live using the official FIFA criteria (points → goal difference → goals scored).
 - **Full knockout bracket** — your bracket is built automatically from your group predictions: winners, runners-up and the 8 best third-placed teams, using the **official FIFA Annex C table (all 495 third-place combinations)**. Predict scores (or just click a winner) all the way to the final. If you predict a draw, click the penalty-shootout winner.
-- **Auto-updating real results** — the app refreshes scores automatically (on open and every 3 hours; sources, in order: fixturedownload.com → FIFA API → TheSportsDB). You can also type a score manually.
+- **Auto-updating real results** — the app refreshes scores automatically (on open and every 3 hours; sources, in order: fixturedownload.com → FIFA API → TheSportsDB). They are read-only: nobody can tamper with them.
 - **Accuracy & points** — exact scores, correct outcomes (1X2), correct teams per knockout round, and a total score.
 - **Today's matches** — big cards with kickoff time **in your local timezone**, venue, your prediction and the live result.
 - **Cloud save & global ranking (☁️)** — sign in with just your email (no password): your predictions sync across devices and you compete in a live ranking. Name asked only the first time.
@@ -76,8 +76,8 @@ Everything is stored in your browser's `localStorage` and synced to the game's d
 ## ⚠️ Limitations
 
 - FIFA's tiebreakers 4–6 (disciplinary points and FIFA ranking) can't be computed from scores alone; in that rare case the app falls back to draw position. Standings could differ from official ones only in extreme ties.
-- Free data sources may lag a few hours behind live results — you can always type a result manually (green inputs).
-- Penalty shootouts: if a real knockout match ends in a draw and the source doesn't report the shootout, click the winner in the real bracket.
+- Free data sources may lag a few hours behind live results; real results are read-only, so you'll need to wait for the source.
+- Penalty shootouts: when a real knockout match ends in a draw, the winner is taken from the source once it reports the shootout.
 
 ## 🛠 Tech
 

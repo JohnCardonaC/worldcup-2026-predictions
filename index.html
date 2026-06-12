@@ -146,6 +146,7 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
 .rank-table td{padding:4px 6px;border-top:1px solid var(--line)}
 .rank-table tr.me td{background:rgba(63,185,80,.12);font-weight:700}
 .pair input:disabled{opacity:.55;cursor:not-allowed;background:var(--panel2)}
+.pair.real input:disabled{opacity:1;cursor:default;background:var(--real);border-color:transparent}
 .lockico{font-size:10px;color:var(--muted)}
 /* MODAL LOG */
 #updlog{position:fixed;bottom:16px;right:16px;max-width:420px;max-height:50vh;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:12px;display:none;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.6)}
@@ -282,7 +283,7 @@ es:{
  title:'MUNDIAL MÉXICO <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
  exp:'Exportar', imp:'Importar', lastUpd:'Últ. actualización: ',
  tabGroups:'Fase de grupos', tabBracket:'Eliminatorias', tabStats:'Mis aciertos',
- hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) o a mano si lo prefieres. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
+ hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) y es de solo lectura. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
  autoUpdated:n=>`⚽ ${n} resultado(s) nuevos cargados automáticamente`, autoNote:' · auto cada 3 h', starCta:'¿Te gusta el juego? Dale una ⭐ en',
  group:'Grupo', pillReal:'tabla real', pillPred:'tabla según tu predicción',
  thTeam:'Equipo', thMatch:'Partido', thPred:'Mi pred.', thReal:'Real',
@@ -291,7 +292,7 @@ es:{
  r32:'16vos', r16:'Octavos', qf:'Cuartos', sf:'Semifinal', third:'3er puesto', final:'FINAL', perPred:' · según tu pred.',
  myBracket:'Mi predicción (clasificados)', realBracket:'Clasificados reales',
  hintBracketPred:'Se arma con tus 72 predicciones (1°, 2° y mejores terceros según el reglamento FIFA). Escribe el marcador que predices en cada llave (si predices empate, clic en el ganador de los penales) o simplemente haz clic en un equipo para avanzarlo hasta el campeón.',
- hintBracketReal:'Se arma con los resultados reales. En cada llave puedes escribir el marcador real; si hay empate (penales), haz clic en el ganador.',
+ hintBracketReal:'Se arma con los resultados reales y se actualiza solo (solo lectura).',
  missingPred:'⚠️ Completa tus predicciones de los 72 partidos de grupos para generar tu bracket.',
  missingReal:'⚠️ El bracket real aparecerá cuando estén los resultados reales de los 72 partidos de grupos.',
  missingCount:'Faltan: ', matches:'partidos',
@@ -317,7 +318,7 @@ en:{
  title:'WORLD CUP MEXICO <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
  exp:'Export', imp:'Import', lastUpd:'Last update: ',
  tabGroups:'Group stage', tabBracket:'Knockout', tabStats:'My accuracy',
- hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) or manually if you prefer. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
+ hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) and is read-only. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
  autoUpdated:n=>`⚽ ${n} new result(s) loaded automatically`, autoNote:' · auto every 3 h', starCta:'Enjoying the game? Star it on',
  group:'Group', pillReal:'real table', pillPred:'table per your prediction',
  thTeam:'Team', thMatch:'Match', thPred:'My pred.', thReal:'Real',
@@ -326,7 +327,7 @@ en:{
  r32:'Round of 32', r16:'Round of 16', qf:'Quarterfinal', sf:'Semifinal', third:'3rd place', final:'FINAL', perPred:' · per your pred.',
  myBracket:'My predicted qualifiers', realBracket:'Actual qualifiers',
  hintBracketPred:'Built from your 72 predictions (winners, runners-up and best thirds per FIFA regulations). Enter your predicted score for each tie (if you predict a draw, click the penalty-shootout winner) or simply click a team to advance it all the way to champion.',
- hintBracketReal:'Built from real results. You can enter the real score for each tie; if it\'s a draw (penalties), click the winner.',
+ hintBracketReal:'Built from real results, updates automatically (read-only).',
  missingPred:'⚠️ Complete your predictions for all 72 group matches to generate your bracket.',
  missingReal:'⚠️ The real bracket will appear once the real results of all 72 group matches are in.',
  missingCount:'Missing: ', matches:'matches',
@@ -659,7 +660,7 @@ function renderGrupos(){
       <div class="teams"><span>${tlabel(m.h)}</span><span>${tlabel(m.a)}</span></div>
       <div class="pair" ${lk?`title="${t('locked')}"`:''}><input id="in-pred-${m.id}-0" inputmode="numeric" value="${p[0]??(lk?0:'')}" ${lk?'disabled':''} onchange="setScore('pred','${m.id}',0,this)"><input id="in-pred-${m.id}-1" inputmode="numeric" value="${p[1]??(lk?0:'')}" ${lk?'disabled':''} onchange="setScore('pred','${m.id}',1,this)"></div>
       <span class="vsep">·</span>
-      <div class="pair real"><input id="in-real-${m.id}-0" inputmode="numeric" value="${r[0]??''}" onchange="setScore('real','${m.id}',0,this)"><input id="in-real-${m.id}-1" inputmode="numeric" value="${r[1]??''}" onchange="setScore('real','${m.id}',1,this)"></div>
+      <div class="pair real"><input id="in-real-${m.id}-0" inputmode="numeric" value="${r[0]??''}" disabled><input id="in-real-${m.id}-1" inputmode="numeric" value="${r[1]??''}" disabled></div>
       <span class="hitmark">${hitMark(m)}</span></div>`;
     }
     h+=`</div>`;
@@ -667,6 +668,7 @@ function renderGrupos(){
   h+=`</div>`;v.innerHTML=h;
 }
 function setScore(kind,mid,idx,inp){
+  if(kind==='real'){renderGrupos();return;} // resultados reales: solo lectura (los trae la app)
   if(kind==='pred'&&gmStarted(GM_BY_ID[mid])){renderGrupos();return;} // cerrada al iniciar el partido
   const v=inp.value.trim();
   const cur=state[kind][mid]||[null,null];
@@ -732,8 +734,8 @@ function koMatchHTML(mid,cl,winners){
     }else{
       const sc=side===0?r.h:r.a;
       const cmp=realHitMarkKO(mid,tm);
-      h+=`<div class="kteam ${sel?'sel':win&&!sel?'dim':''}" onclick="pickRealKO(${mid},'${tm}')">${tlabel(tm)}${cmp}
-        <input class="ksc" id="ko-${mid}-${side}" style="width:34px;background:var(--real);border:1px solid var(--border);color:var(--txt);border-radius:4px;text-align:center" inputmode="numeric" value="${sc??''}" onclick="event.stopPropagation()" onchange="setRealKOScore(${mid},${side},this)"></div>`;
+      h+=`<div class="kteam ${sel?'sel':win&&!sel?'dim':''}" style="cursor:default">${tlabel(tm)}${cmp}
+        <input class="ksc" id="ko-${mid}-${side}" style="width:34px;background:var(--real);border:1px solid transparent;color:var(--txt);border-radius:4px;text-align:center" inputmode="numeric" value="${sc??''}" disabled></div>`;
     }
   });
   h+=`</div>`;return h;
@@ -761,17 +763,8 @@ function setPredKOScore(mid,side,inp){
   save();setTimeout(()=>{const aid=document.activeElement&&document.activeElement.id;renderBracket();renderStats();
     if(aid){const el=document.getElementById(aid);if(el){el.focus();if(el.select)el.select();}}},0);
 }
-function pickRealKO(mid,t){ // solo relevante para empates (penales)
-  const r=state.realKO[mid]||{};
-  if(isScore([r.h,r.a])&&r.h===r.a){r.win=r.win===t?null:t;state.realKO[mid]=r;save();renderBracket();renderStats();}
-}
-function setRealKOScore(mid,side,inp){
-  const v=inp.value.trim();const r=state.realKO[mid]||{h:null,a:null,win:null};
-  r[side===0?'h':'a']=v===''?null:Math.max(0,parseInt(v,10)||0);
-  if(r.h===null&&r.a===null)delete state.realKO[mid];else state.realKO[mid]=r;
-  save();setTimeout(()=>{const aid=document.activeElement&&document.activeElement.id;renderBracket();renderStats();
-    if(aid){const el=document.getElementById(aid);if(el){el.focus();if(el.select)el.select();}}},0);
-}
+function pickRealKO(){/* resultados reales: solo lectura */}
+function setRealKOScore(){/* resultados reales: solo lectura */}
 /* ============ RENDER: STATS ============ */
 function renderStats(){
   const v=$('view-stats');

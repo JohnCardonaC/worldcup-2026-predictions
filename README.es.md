@@ -18,7 +18,7 @@ Un solo archivo HTML. Sin instalación, sin cuenta, sin servidor. Tus datos nunc
 - **Los 104 partidos reales** — sorteo, calendario y sedes oficiales (grupos A–L, 11 jun – 19 jul 2026).
 - **Predicciones de fase de grupos** — escribe tu marcador para los 72 partidos; las tablas de posiciones se calculan en vivo con los criterios oficiales FIFA (puntos → diferencia de gol → goles a favor).
 - **Bracket completo de eliminatorias** — tu bracket se arma automáticamente con tus predicciones de grupos: primeros, segundos y los 8 mejores terceros, usando la **tabla oficial del Anexo C de FIFA (las 495 combinaciones de terceros)**. Predice marcadores (o solo haz clic en el ganador) hasta la final. Si predices empate, elige con un clic al ganador de los penales.
-- **Resultados reales automáticos** — la app actualiza los marcadores sola (al abrirla y cada 3 horas; fuentes, en orden: fixturedownload.com → API de FIFA → TheSportsDB). También puedes escribirlos a mano.
+- **Resultados reales automáticos** — la app actualiza los marcadores sola (al abrirla y cada 3 horas; fuentes, en orden: fixturedownload.com → API de FIFA → TheSportsDB). Son de solo lectura: nadie puede alterarlos.
 - **Aciertos y puntos** — marcadores exactos, resultados (1X2), equipos acertados por ronda eliminatoria y puntaje total.
 - **Partidos de hoy** — tarjetas grandes con la hora **en tu zona horaria**, sede, tu predicción y el resultado en vivo.
 - **Guardado en la nube y ranking global (☁️)** — entras solo con tu correo (sin contraseña): tus predicciones se sincronizan entre dispositivos y compites en un ranking en vivo. El nombre se pide solo la primera vez.
@@ -76,8 +76,8 @@ Todo se guarda en el `localStorage` de tu navegador y se sincroniza con la base 
 ## ⚠️ Limitaciones
 
 - Los criterios de desempate 4–6 de FIFA (fair play y ranking FIFA) no se pueden calcular solo con marcadores; en ese caso raro la app usa la posición del sorteo. Las tablas podrían diferir de las oficiales solo en empates extremos.
-- Las fuentes gratuitas de datos pueden ir unas horas detrás del resultado en vivo — siempre puedes escribir el resultado a mano (campos verdes).
-- Penales: si un partido real de eliminatorias termina empatado y la fuente no reporta la tanda, haz clic en el ganador dentro del bracket real.
+- Las fuentes gratuitas de datos pueden ir unas horas detrás del resultado en vivo; los resultados reales son de solo lectura, así que toca esperar a la fuente.
+- Penales: si un partido real de eliminatorias termina empatado, el ganador se toma de la fuente cuando reporta la tanda.
 
 ## 🛠 Tecnología
 
