@@ -65,6 +65,13 @@ table.stand td{padding:3px 4px;text-align:center;border-top:1px solid var(--line
 table.stand td.tname{text-align:left;white-space:nowrap}
 table.stand tr.q1 td{background:rgba(63,185,80,.10)}
 table.stand tr.q3 td{background:rgba(210,153,34,.08)}
+.standwrap{display:flex;flex-wrap:wrap}
+.standblock{flex:1 1 200px;min-width:0}
+.standblock+.standblock{border-left:1px solid var(--border)}
+.standblock .cap{font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:5px 8px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:5px;white-space:nowrap}
+.standblock .cap::before{content:"";width:8px;height:8px;border-radius:2px;flex:0 0 auto}
+.standblock.pred .cap::before{background:var(--blue)}
+.standblock.real .cap::before{background:var(--acc)}
 .mrow{display:grid;grid-template-columns:46px 1fr 84px 14px 84px 30px;gap:6px;align-items:center;padding:5px 10px;border-top:1px solid var(--line);font-size:13px}
 .mrow .date{color:var(--muted);font-size:11px}
 .mrow .teams{display:flex;flex-direction:column;gap:2px;line-height:1.2}
@@ -169,6 +176,7 @@ table.stand tr.q3 td{background:rgba(210,153,34,.08)}
   </div>
   <div class="spacer"></div>
   <div class="actions">
+    <button id="btnUpd" class="primary" onclick="actualizarResultados(false)">⟳</button>
     <button id="btnCloud" onclick="cloudOpen()" style="display:none">☁️</button>
     <button class="icon" id="btnTheme" onclick="toggleTheme()" title="Modo claro / oscuro · Light / dark mode">☀️</button>
     <button class="icon" id="btnLang" onclick="toggleLang()" title="Cambiar idioma / Switch language">🌐 EN</button>
@@ -271,7 +279,7 @@ es:{
  title:'MUNDIAL MÉXICO <span class="y">2026</span>', subTitle:'Mis predicciones · 11 jun – 19 jul', played:n=>`${n}/104 jugados`, updBtn:'⟳ Actualizar resultados reales',
  lastUpd:'Últ. actualización: ',
  tabGroups:'Fase de grupos', tabBracket:'Eliminatorias', tabStats:'Mis aciertos',
- hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) y es de solo lectura. La tabla de posiciones se calcula con tus predicciones (criterios FIFA: puntos → dif. de gol → goles a favor). ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
+ hintGroups:'Escribe el marcador que predices (columna azul) para los 72 partidos. La columna verde es el resultado real: <b>se llena sola</b> (la app revisa cada 3 horas) y es de solo lectura. Cada grupo muestra dos tablas: la de tu predicción y la real (que se llena sola con los resultados oficiales). Ambas usan criterios FIFA: puntos → dif. de gol → goles a favor. ● exacto ◐ resultado ○ fallo. 🔒 Cada predicción se cierra cuando su partido empieza; si la dejaste vacía, cuenta como 0–0.',
  autoUpdated:n=>`⚽ ${n} resultado(s) nuevos cargados automáticamente`, autoNote:' · auto cada 3 h', starCta:'¿Te gusta el juego? Dale una ⭐ en',
  group:'Grupo', pillReal:'tabla real', pillPred:'tabla según tu predicción',
  thTeam:'Equipo', thMatch:'Partido', thPred:'Mi pred.', thReal:'Real',
@@ -306,7 +314,7 @@ en:{
  title:'WORLD CUP MEXICO <span class="y">2026</span>', subTitle:'My predictions · Jun 11 – Jul 19', played:n=>`${n}/104 played`, updBtn:'⟳ Update real results',
  lastUpd:'Last update: ',
  tabGroups:'Group stage', tabBracket:'Knockout', tabStats:'My accuracy',
- hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) and is read-only. Standings are computed from your predictions (FIFA criteria: points → goal difference → goals scored). ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
+ hintGroups:'Enter your predicted score (blue column) for all 72 matches. The green column is the real result: it <b>fills in automatically</b> (the app checks every 3 hours) and is read-only. Each group shows two standings: yours (from your predictions) and the real one (filled automatically from official results). Both use FIFA criteria: points → goal difference → goals scored. ● exact ◐ outcome ○ miss. 🔒 Each prediction locks when its match kicks off; left empty counts as 0–0.',
  autoUpdated:n=>`⚽ ${n} new result(s) loaded automatically`, autoNote:' · auto every 3 h', starCta:'Enjoying the game? Star it on',
  group:'Group', pillReal:'real table', pillPred:'table per your prediction',
  thTeam:'Team', thMatch:'Match', thPred:'My pred.', thReal:'Real',
@@ -626,6 +634,12 @@ function hitMark(m){
   if(Math.sign(p[0]-p[1])===Math.sign(r[0]-r[1]))return `<span class="hit-out" title="${t('outcomeHit')}">◐</span>`;
   return `<span class="hit-no" title="${t('missed')}">○</span>`;
 }
+function standBlock(rows,cap,kind){
+  let h=`<div class="standblock ${kind}"><div class="cap">${cap}</div>`;
+  h+=`<table class="stand"><tr><th></th><th style="text-align:left">${t('thTeam')}</th><th>PJ</th><th>Pts</th><th>DG</th><th>GF</th></tr>`;
+  rows.forEach((r,i)=>{h+=`<tr class="${i<2?'q1':i===2?'q3':''}"><td>${i+1}</td><td class="tname">${tlabel(r.t,true)}</td><td>${r.pj}</td><td><b>${r.pts}</b></td><td>${r.gd>0?'+':''}${r.gd}</td><td>${r.gf}</td></tr>`;});
+  return h+`</table></div>`;
+}
 function renderGrupos(){
   const v=$('view-grupos');
   let h=todaySectionHTML();
@@ -634,12 +648,8 @@ function renderGrupos(){
   for(const g of GL){
     const tb=tableFor(g,pe);
     const tbR=tableFor(g,state.real);
-    const useReal=groupComplete(g,state.real);
-    h+=`<div class="gcard"><h2><span>${t('group')} <span class="gname">${g}</span></span><span class="pill">${useReal?t('pillReal'):t('pillPred')}</span></h2>`;
-    const rows=useReal?tbR:tb;
-    h+=`<table class="stand"><tr><th></th><th style="text-align:left">${t('thTeam')}</th><th>PJ</th><th>Pts</th><th>DG</th><th>GF</th></tr>`;
-    rows.forEach((r,i)=>{h+=`<tr class="${i<2?'q1':i===2?'q3':''}"><td>${i+1}</td><td class="tname">${tlabel(r.t)}</td><td>${r.pj}</td><td><b>${r.pts}</b></td><td>${r.gd>0?'+':''}${r.gd}</td><td>${r.gf}</td></tr>`;});
-    h+=`</table>`;
+    h+=`<div class="gcard"><h2><span>${t('group')} <span class="gname">${g}</span></span></h2>`;
+    h+=`<div class="standwrap">${standBlock(tb,t('pillPred'),'pred')}${standBlock(tbR,t('pillReal'),'real')}</div>`;
     h+=`<div class="collabels"><span></span><span>${t('thMatch')}</span><span>${t('thPred')}</span><span></span><span>${t('thReal')}</span><span></span></div>`;
     for(const m of GM.filter(x=>x.g===g)){
       const p=state.pred[m.id]||['',''],r=state.real[m.id]||['',''];
@@ -798,6 +808,7 @@ function logLine(txt,cls){logBox().insertAdjacentHTML('beforeend',`<div class="l
 let updRunning=false;
 async function actualizarResultados(auto){
   if(updRunning)return;updRunning=true;
+  const ub=$('btnUpd');if(ub){ub.disabled=true;ub.textContent='⟳ '+t('updating');}
   if(!auto){const b=logBox();b.innerHTML=`<span class="x" onclick="this.parentElement.style.display='none'">✕</span><h4>${t('updating')}</h4>`;}
   let changes=0;
   try{
@@ -820,7 +831,7 @@ async function actualizarResultados(auto){
     }else if(!auto){
       logLine(t('noSource'),'err');
     }
-  }finally{updRunning=false;}
+  }finally{updRunning=false;if(ub){ub.disabled=false;ub.textContent=t('updBtn');}}
 }
 // Actualización automática: al abrir (si pasaron >3 h) y periódicamente mientras la página esté abierta
 const UPD_MS=3*3600*1000;
@@ -1116,6 +1127,7 @@ function renderChrome(){
   const n=playedCount();
   $('prgFill').style.width=Math.round(100*n/104)+'%';
   $('prgTxt').textContent=t('played',n);
+  if(!updRunning)$('btnUpd').textContent=t('updBtn');
   $('btnLang').textContent=LANG==='es'?'🌐 EN':'🌐 ES';
   $('btnTheme').textContent=curTheme()==='light'?'🌙':'☀️';
   $('tab-grupos').textContent=t('tabGroups');
